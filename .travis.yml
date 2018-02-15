@@ -49,4 +49,4 @@ deploy:
     - artifacts/*.dmg
   on:
     repo: durasj/winamp2-js-desktop
-
+    tags: true
