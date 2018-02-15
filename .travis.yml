@@ -42,6 +42,7 @@ deploy:
   provider: releases
   api_key:
     secure: Bz501ygXO3jCJA2+/WaOKKBk6TiLE6Dysv8vhnJZcMjCLLSUlg6+nbjm9ysNPSKkJcUB/1cePj1zhqT0Qhd7LqYyn1mX8/zGq+4ruIzabxe2znXiiDshv7/8kuzXq3CAZAvvjiDipCSW85vfNBJM7ibrEW6JhTeXi14P5I6tQUMKZ0RIQP3nJuLuB/7KHPlBDfC3IH7J47dF86XXsNGmWmBzcchlhsxb81CWNHnJK1SgvwpkrWiY6QtK0HbvENfKD2wgK95o4OvWl04lWawwieeKjHn+sfbUhUNm+Ssm8XKJiBI8GJz+90/6rzn55RKFUiiiiO4xZ2AkKKhZXWmFjwyvdQSchalMBIEEl/KGqFok9DhRuWbhjrwTZbbnbwfwtSd0zikZ5vq72oCsQ5H89C9090cmMv3e1FTdflbQisyNCr2WIrTYBvAcGR7QjHDpPXJJXcwPxYixgRMNHokLWJSBGU9AjBe5eNwBVlmqcES0rInR6XvFyXUZ0fXv5YsromLu4LaFczQ8BwKmYFmj3BPri0NbdaDZ/q2+Yz7c8R2GNobR/DYM5t+12NXSN9y39v+8RbODMDXCS01Wlt+vWspqeVBM4eWgAx9Z0hq6X9sUOHPd/+VQRECQ5W209L/i0jIUxog5QLChz+k5/anAQknW7wEyGYAp/H7sDL+43Zs=
+  file_glob: true
   file:
     - artifacts/*.exe
     - artifacts/*.AppImage
