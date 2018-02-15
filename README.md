@@ -1,6 +1,6 @@
 # Winamp2-js for desktop
 
-Unnoficial application based on [Winamp2-js](https://github.com/captbaritone/winamp2-js) - "A reimplementation of Winamp 2.9 in HTML5 and JavaScript.".
+Unnoficial application based on [Winamp2-js](https://github.com/captbaritone/winamp2-js) - "A reimplementation of Winamp 2.9 in HTML5 and JavaScript.". This is, for now, proof of concept, but you can already drop the files on the player and play them or use different skins.
 
 [![Screenshot of Winamp2-js for desktop](./screen.gif)](https://github.com/durasj/winamp2-js-desktop)
 
