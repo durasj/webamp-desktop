@@ -6,9 +6,9 @@ Unnoficial application based on [Winamp2-js](https://github.com/captbaritone/win
 
 
 ## Downloads
-- Windows - [portable 64-bit](./releases/download/v0.1.0/winamp2-js-desktop-0.1.0.exe)
-- Linux - [AppImage 64-bit](./releases/download/v0.1.0/winamp2-js-desktop-0.1.0-x86_64.AppImage), [deb 64-bit](./releases/download/v0.1.0/winamp2-js-desktop_0.1.0_amd64.deb)
-- MacOS X - [dmg 64-bit](./releases/download/v0.1.0/winamp2-js-desktop-0.1.0.dmg)
+- Windows - [portable 64-bit](https://github.com/durasj/winamp2-js-desktop/releases/download/v0.1.0/winamp2-js-desktop-0.1.0.exe)
+- Linux - [AppImage 64-bit](https://github.com/durasj/winamp2-js-desktop/releases/download/v0.1.0/winamp2-js-desktop-0.1.0-x86_64.AppImage), [deb 64-bit](https://github.com/durasj/winamp2-js-desktop/releases/download/v0.1.0/winamp2-js-desktop_0.1.0_amd64.deb)
+- MacOS X - [dmg 64-bit](https://github.com/durasj/winamp2-js-desktop/releases/download/v0.1.0/winamp2-js-desktop-0.1.0.dmg)
 
 ## Ideas for the future
 - Establish proper integration with the Winamp2-js by extending its API
