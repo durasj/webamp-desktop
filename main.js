@@ -12,15 +12,66 @@ const url = require('url');
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
+let ignoringMouseEvents = false;
+let interval;
+
+function enableTransparencyChecking() {
+  clearInterval(interval);
+  interval = setInterval(() => {
+    const cursorPoint = electron.screen.getCursorScreenPoint();
+    const windowBounds = mainWindow.getBounds();
+
+    const cursorWithinBounds =
+      (cursorPoint.x >= windowBounds.x && cursorPoint.x <= (windowBounds.x + windowBounds.width)) &&
+      (cursorPoint.y >= windowBounds.y && cursorPoint.y <= (windowBounds.y + windowBounds.height));
+
+    if (cursorWithinBounds) {
+      mainWindow.webContents.capturePage({
+        x: cursorPoint.x - windowBounds.x,
+        y: cursorPoint.y - windowBounds.y,
+        width: 1,
+        height: 1
+      }, (image) => {
+        const buffer = image.getBitmap();
+
+        if (buffer[3] && buffer[3] > 0) {
+          if (ignoringMouseEvents) {
+            mainWindow.setIgnoreMouseEvents(false);
+            ignoringMouseEvents = false;
+          }
+        } else {
+          if (!ignoringMouseEvents) {
+            mainWindow.setIgnoreMouseEvents(true);
+            ignoringMouseEvents = true;
+          }
+        }
+      });
+    }
+  }, 100);
+}
+
+function disableTransparencyChecking() {
+  clearInterval(interval);
+}
 
 function createWindow () {
+  const {
+    width,
+    height
+  } = electron.screen.getPrimaryDisplay().workAreaSize;
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 275,
-    height: 348,
+    x: 0,
+    y: 0,
+    width: width,
+    height: height,
+    transparent: true,
     frame: false,
     show: false,
     resizable: false,
+    movable: false,
+    fullscreenable: false,
     icon: path.join(__dirname, 'res/icon.png')
   });
 
@@ -31,13 +82,25 @@ function createWindow () {
     slashes: true
   }));
 
+  mainWindow.on('restore', () => {
+    enableTransparencyChecking();
+  });
+
+  mainWindow.on('minimize', () => {
+    disableTransparencyChecking();
+  });
+
   // and show window once it's ready (to prevent flashing)
   mainWindow.once('ready-to-show', () => {
-    mainWindow.show()
+    mainWindow.show();
+
+    enableTransparencyChecking();
   });
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
+    disableTransparencyChecking();
+
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.

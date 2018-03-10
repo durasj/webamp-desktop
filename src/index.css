@@ -23,14 +23,13 @@ time, mark, audio, video {
 }
 
 html {
-	background: #383858;
 	overflow: hidden;
 }
 
 /**
  * Window controls
  */
-#winamp2-js .title-bar.draggable, #winamp2-js .title-bard.draggable, #winamp2-js .playlist-top.draggable {
+/*#winamp2-js .title-bar.draggable, #winamp2-js .title-bard.draggable, #winamp2-js .playlist-top.draggable {
 	-webkit-app-region: drag;
 	cursor: url(data:image/x-win-bitmap;base64,AAACAAEAICAAAAAAAADoAgAAFgAAACgAAAAgAAAAQAAA…D/EOMx/wHz8/8AHA//ADwP/wB+H/8A/z//Af///wP///8H////D////x////8/////f////w==), auto !important;
 }
@@ -42,3 +41,4 @@ html {
 #winamp2-js #playlist-resize-target {
 	pointer-events: none;
 }
+*/
