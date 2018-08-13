@@ -1,6 +1,6 @@
 {
   "name": "webamp-desktop",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Desktop version of Winamp 2.9 reimplementation in HTML5 and JS",
   "main": "main.js",
   "scripts": {
