@@ -1,36 +1,40 @@
-const Winamp = require('winamp2-js');
+import Webamp from 'webamp'
 
-const remote = require('electron').remote;
-
-const winamp = new Winamp({
-  initialTrack: {
-    name: "1. DJ Mike Llama - Llama Whippin' Intro",
-    url: "https://d38dnrh1liu4f5.cloudfront.net/projects/winamp2-js/mp3/llama-2.91.mp3"
-  },
+const webamp = new Webamp({
+  initialTracks: [
+    {
+      metaData: {
+        artist: 'DJ Mike Llama',
+        title: 'Llama Whippin\' Intro',
+      },
+      url: './mp3/llama-2.91.mp3'
+    }
+  ],
   initialSkin: {
-    url: "https://d38dnrh1liu4f5.cloudfront.net/projects/winamp2-js/skins/base-2.91.wsz"
-  }
-});
+    url: './skins/base-2.91.wsz'
+  },
+  availableSkins: [
+    { url: './skins/base-2.91.wsz', name: 'Base v2.91' },
+    { url: './skins/Green-Dimension-V2.wsz', name: 'Green Dimension V2' },
+    { url: './skins/MacOSXAqua1-5.wsz', name: 'Mac OSX v1.5 (Aqua)' },
+    { url: './skins/Skinner_Atlas.wsz', name: 'Skinner Atlas' },
+    { url: './skins/TopazAmp1-2.wsz', name: 'TopazAmp v1.2' },
+    { url: './skins/Vizor1-01.wsz', name: 'Vizor v1.01' },
+    { url: './skins/XMMS-Turquoise.wsz', name: 'XMMS Turquoise' },
+    { url: './skins/ZaxonRemake1-0.wsz', name: 'Zaxon Remake v1.0' },
+  ],
+  enableHotkeys: true,
+})
 
-const winampJsEl = document.getElementById('winamp2-js');
+const unsubscribeOnMinimize = webamp.onMinimize(() => {
+  window.minimizeElectronWindow()
+})
+
+const unsubscribeOnClose = webamp.onClose(() => {
+  window.closeElectronWindow()
+  unsubscribeOnMinimize()
+  unsubscribeOnClose()
+})
 
 // Render after the skin has loaded.
-winamp.renderWhenReady(winampJsEl);
-
-// Hacky way to control minimizing and closing
-// TODO: Replace with API on the Winamp
-winampJsEl.addEventListener('click', function(e) {
-  let found, el = e.target || e.srcElement;
-  while (el && !(found = ['minimize', 'close'].indexOf((<HTMLElement> el).id) != -1)) el = (<HTMLElement> el).parentElement;
-  if (found) {
-    if (((<HTMLElement> el).id) === 'minimize') {
-      // Minimize
-      remote.getCurrentWindow().minimize(); 
-    } else {
-      // Close
-      remote.getCurrentWindow().close();
-    }
-
-    e.stopImmediatePropagation();
-  }
-});
+webamp.renderWhenReady(document.getElementById('webamp'))

@@ -14,31 +14,21 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup, 
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
 }
 
 html {
-	background: #383858;
-	overflow: hidden;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
 }
 
-/**
- * Window controls
- */
-#winamp2-js .title-bar.draggable, #winamp2-js .title-bard.draggable, #winamp2-js .playlist-top.draggable {
-	-webkit-app-region: drag;
-	cursor: url(data:image/x-win-bitmap;base64,AAACAAEAICAAAAAAAADoAgAAFgAAACgAAAAgAAAAQAAA…D/EOMx/wHz8/8AHA//ADwP/wB+H/8A/z//Af///wP///8H////D////x////8/////f////w==), auto !important;
-}
-
-#winamp2-js #option-context, #winamp2-js #minimize, #winamp2-js #shade, #winamp2-js #close {
-	-webkit-app-region: no-drag;
-}
-
-#winamp2-js #playlist-resize-target {
-	pointer-events: none;
+#webamp {
+    width: 100%;
+    height: 100%;
 }

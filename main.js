@@ -1,68 +1,195 @@
-const electron = require('electron');
+const electron = require('electron')
 // Module to control application life.
-const app = electron.app;
+const app = electron.app
 // Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow;
+const BrowserWindow = electron.BrowserWindow
 
-require('electron-debug')({showDevTools: 'undocked'});
+require('electron-debug')({showDevTools: 'undocked'})
 
-const path = require('path');
-const url = require('url');
+const path = require('path')
+const url = require('url')
+const fs = require('fs')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow;
+let mainWindow
+let ignoringMouseEvents = false
+let interval
+
+function enableTransparencyChecking() {
+  clearInterval(interval)
+  interval = setInterval(() => {
+    const cursorPoint = electron.screen.getCursorScreenPoint()
+    const windowBounds = mainWindow.getBounds()
+
+    const cursorWithinBounds =
+      (cursorPoint.x >= windowBounds.x && cursorPoint.x <= (windowBounds.x + windowBounds.width)) &&
+      (cursorPoint.y >= windowBounds.y && cursorPoint.y <= (windowBounds.y + windowBounds.height))
+
+    if (cursorWithinBounds) {
+      mainWindow.webContents.capturePage({
+        x: cursorPoint.x - windowBounds.x,
+        y: cursorPoint.y - windowBounds.y,
+        width: 1,
+        height: 1
+      }, (image) => {
+        if (!mainWindow) {
+          return;
+        }
+
+        const buffer = image.getBitmap()
+
+        if (buffer[3] && buffer[3] > 0) {
+          if (ignoringMouseEvents) {
+            mainWindow.setIgnoreMouseEvents(false)
+            ignoringMouseEvents = false
+          }
+        } else {
+          if (!ignoringMouseEvents) {
+            mainWindow.setIgnoreMouseEvents(true)
+            ignoringMouseEvents = true
+          }
+        }
+      })
+    }
+  }, 100)
+}
+
+function disableTransparencyChecking() {
+  clearInterval(interval)
+}
 
 function createWindow () {
+  /**
+   * Content security policy
+   */
+  const cspSrc = [
+    "default-src 'none'",
+    "script-src 'self'",
+    "style-src 'self' 'unsafe-inline' data:",
+    "img-src 'self' data:",
+    "font-src 'self' data:",
+    "media-src 'self' blob:",
+    "object-src 'self' blob:"
+  ]
+  if (process.env.NODE_ENV === 'production') {
+    cspSrc.push("connect-src 'self'")
+  } else {
+    cspSrc.push("connect-src 'self' ws://127.0.0.1:54439")
+  }
+  electron.protocol.interceptStreamProtocol('file', (request, callback) => {
+    const url = request.url.substr(8)
+    const filePath = path.normalize(`${__dirname}/${url}`)
+    callback({
+      statusCode: fs.existsSync(filePath) ? 200 : 404,
+      headers: {
+        ...request.headers,
+        'Content-Security-Policy': cspSrc.join(';')
+      },
+      data: fs.createReadStream(filePath)
+    })
+  }, (error) => {
+    if (error) console.error('Failed to register protocol')
+  })
+
+  const {
+    width,
+    height
+  } = electron.screen.getPrimaryDisplay().workAreaSize
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 275,
-    height: 348,
+    x: 0,
+    y: 0,
+    width: width,
+    height: height,
+    transparent: true,
     frame: false,
     show: false,
     resizable: false,
-    icon: path.join(__dirname, 'res/icon.png')
-  });
+    movable: false,
+    fullscreenable: false,
+    icon: path.join(__dirname, 'res/icon.png'),
+    webPreferences: {
+      nodeIntegration: false,
+      preload: path.join(__dirname, 'preload.js'),
+    }
+  })
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'dist/index.html'),
+    pathname: './dist/index.html',
     protocol: 'file:',
     slashes: true
-  }));
+  }))
+
+  mainWindow.on('restore', () => {
+    enableTransparencyChecking()
+  })
+
+  mainWindow.on('minimize', () => {
+    disableTransparencyChecking()
+  })
 
   // and show window once it's ready (to prevent flashing)
   mainWindow.once('ready-to-show', () => {
     mainWindow.show()
-  });
+
+    enableTransparencyChecking()
+  })
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
+    disableTransparencyChecking()
+
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    mainWindow = null;
-  });
+    mainWindow = null
+  })
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', createWindow)
+
+// Prevent all navigation for security reasons
+// See https://github.com/electron/electron/blob/master/docs/tutorial/security.md#13-disable-or-limit-navigation
+app.on('web-contents-created', (event, contents) => {
+  contents.on('will-navigate', (event, navigationUrl) => {
+    event.preventDefault()
+  })
+})
+// Prevent new window creation for security reasons
+// and open the URLs in the default browser instead
+// See https://github.com/electron/electron/blob/master/docs/tutorial/security.md#14-disable-or-limit-creation-of-new-windows
+app.on('web-contents-created', (event, contents) => {
+  contents.on('new-window', (event, navigationUrl) => {
+    const parsedUrl = url.parse(navigationUrl)
+
+    if (parsedUrl.protocol === 'file:' || parsedUrl.protocol === 'chrome-devtools:') {
+      return;
+    }
+
+    event.preventDefault()
+    electron.shell.openExternal(navigationUrl)
+  })
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
-    app.quit();
+    app.quit()
   }
-});
+})
 
 app.on('activate', function () {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
-    createWindow();
+    createWindow()
   }
-});
+})

@@ -1,27 +1,39 @@
-# Winamp2-js for desktop
+<p align="center">
+  <a href="https://github.com/durasj/webamp-desktop">
+    <img src="./res/logo.svg" alt="Webamp on desktop logo" width=384 height=128>
+  </a>
 
-Unnoficial application based on [Winamp2-js](https://github.com/captbaritone/winamp2-js) - "A reimplementation of Winamp 2.9 in HTML5 and JavaScript.". Although this app is still just a proof of concept, you can already drop the files on the player and play them or use different skins.
+  <h3 align="center">Webamp on desktop</h3>
 
-[![Screenshot of Winamp2-js on Windows](./res/screen-win.gif)](https://github.com/durasj/winamp2-js-desktop) [![Screenshot of Winamp2-js on Linux](./res/screen-linux.png)](https://github.com/durasj/winamp2-js-desktop) [![Screenshot of Winamp2-js on Mac OS X](./res/screen-mac.png)](https://github.com/durasj/winamp2-js-desktop)
+  <p align="center">
+    Just like the original, now on your Mac, Windows or a Linux!
+  </p>
+</p>
 
+<br>
+
+[![Screenshot of webamp desktop on Windows](./res/screen-win.gif)](https://github.com/durasj/webamp-desktop) [![Screenshot of Webamp on Linux](./res/screen-linux.png)](https://github.com/durasj/webamp-desktop) [![Screenshot of Webamp on Mac OS X](./res/screen-mac.png)](https://github.com/durasj/webamp-desktop)
+
+Unofficial app. It has most of the functionality of the original Winamp, but it's still more of a proof of concept. Based on the [Webamp](https://github.com/captbaritone/webamp) - "A reimplementation of Winamp 2.9 in HTML5 and JavaScript." by the [@captbaritone](https://github.com/captbaritone). Linux support via AppImage and .deb package tested on the Ubuntu.
 
 ## Downloads
-- Windows - [portable 64-bit](https://github.com/durasj/winamp2-js-desktop/releases/download/v0.1.0/winamp2-js-desktop-0.1.0.exe)
-- Linux - [AppImage 64-bit](https://github.com/durasj/winamp2-js-desktop/releases/download/v0.1.0/winamp2-js-desktop-0.1.0-x86_64.AppImage), [deb 64-bit](https://github.com/durasj/winamp2-js-desktop/releases/download/v0.1.0/winamp2-js-desktop_0.1.0_amd64.deb)
-- MacOS X - [dmg 64-bit](https://github.com/durasj/winamp2-js-desktop/releases/download/v0.1.0/winamp2-js-desktop-0.1.0.dmg)
+- Windows - [portable 64-bit](https://github.com/durasj/webamp-desktop/releases/download/v0.1.0/winamp2-js-desktop-0.1.0.exe)
+- Linux - [AppImage 64-bit](https://github.com/durasj/webamp-desktop/releases/download/v0.1.0/winamp2-js-desktop-0.1.0-x86_64.AppImage), [deb 64-bit](https://github.com/durasj/webamp-desktop/releases/download/v0.1.0/winamp2-js-desktop_0.1.0_amd64.deb)
+- MacOS X - [dmg 64-bit](https://github.com/durasj/webamp-desktop/releases/download/v0.1.0/winamp2-js-desktop-0.1.0.dmg)
 
 ## Ideas for the future
-- Establish proper integration with the Winamp2-js by extending its API
-- Add features that are not in the web version (via the API)
+- Establish proper integration with the webamp-js by using its API
+- Change packages to installable versions with automatic updates
 - Implement Windows.Media WinRT API
-- Make window transparent (useful mainly for different skins)
-- Implement each player window as different electron windows
+- Add support for multiple displays
+- Add features that are not in the web version (via the API)
+- Try to integrate [winampify-js](https://github.com/remigallego/winampify-js)
 
 ## Developing
 
 ### Prerequisites
 
-Assuming you have and know [node.js](https://nodejs.org/en/), make sure you have the latest [yarn](https://yarnpkg.com/lang/en/) and [typescript](https://www.typescriptlang.org/) installed:
+Assuming you have [node.js](https://nodejs.org/en/) with npm installed, make sure you have the latest [yarn](https://yarnpkg.com/lang/en/) and [typescript](https://www.typescriptlang.org/):
 
 ```
 npm -g i yarn typescript
@@ -32,9 +44,9 @@ npm -g i yarn typescript
 Clone this repository, install dependencies and run the start script:
 
 ```
-git clone https://github.com/durasj/winamp2-js-desktop.git
-cd winamp2-js-desktop
-yarn
+git clone https://github.com/durasj/webamp-desktop.git
+cd webamp-desktop
+yarn install
 yarn start
 ```
 

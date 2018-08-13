@@ -1,11 +1,12 @@
 {
-  "name": "winamp2-js-desktop",
+  "name": "webamp-desktop",
   "version": "0.1.0",
   "description": "Desktop version of Winamp 2.9 reimplementation in HTML5 and JS",
   "main": "main.js",
   "scripts": {
-    "copy": "cp ./src/index.html ./dist/index.html && cp ./src/index.css ./dist/style.css",
-    "build": "yarn run copy && tsc",
+    "build": "parcel build --public-url ./ ./src/index.html",
+    "watch": "parcel watch --public-url ./ --hmr-hostname 127.0.0.1 --hmr-port 54439 ./src/index.html",
+    "electron": "./node_modules/.bin/electron .",
     "start": "yarn run build && electron .",
     "pack:win": "build -w --x64",
     "pack:linux": "build -l --x64",
@@ -13,25 +14,29 @@
     "pack": "yarn run pack:win && yarn run pack:linux && yarn run pack:mac",
     "dist": "yarn run build && build --x64"
   },
-  "repository": "https://github.com/durasj/winamp2-js-desktop",
+  "repository": "https://github.com/durasj/webamp-desktop",
   "author": "Jakub Duras <jakub@duras.me>",
   "license": "MIT",
   "dependencies": {
-    "electron-debug": "^1.5.0",
-    "eslint": "^4.17.0",
-    "typescript": "^2.7.1",
-    "winamp2-js": "~0.0.2"
+    "webamp": "^1.1.2"
   },
   "devDependencies": {
     "@types/electron": "^1.6.10",
-    "@types/node": "^9.4.6",
-    "electron": "~1.7.8",
-    "electron-builder": "^20.0.4",
-    "node-sass": "^4.7.2",
-    "tslint": "^5.9.1"
+    "@types/node": "^10.5.8",
+    "electron": "~2.0.7",
+    "electron-builder": "^20.27.1",
+    "electron-debug": "^2.0.0",
+    "eslint": "^5.3.0",
+    "node-sass": "^4.9.3",
+    "parcel-bundler": "^1.9.7",
+    "tslint": "^5.11.0",
+    "typescript": "^2.9.2"
   },
+  "browserslist": [
+    "Chrome 61"
+  ],
   "build": {
-    "appId": "me.duras.winamp2jsdesktop",
+    "appId": "me.duras.webampdesktop",
     "files": [
       "**/*",
       "!.git${/*}",
