@@ -24,11 +24,22 @@ Unofficial app. It has most of the functionality of the original Winamp, but it'
 ## Ideas for the future
 - Establish proper integration with the webamp-js by using its API
 - Change packages to installable versions with automatic updates
-- Implement Windows.Media WinRT API
+- Implement Windows.Media WinRT API (Taskbar media controls)
 - Support for multiple displays
 - Support file associations
+- Media Keys support (Play, Pause, Stop, Previous, Next)
 - Add features that are not in the web version (via the API)
 - Try to integrate [winampify-js](https://github.com/remigallego/winampify-js), milkdrop can be integrated using microphone (?) due to problems with the DRM
+
+## Known issues
+
+### Installation files are not trusted
+
+Some operating systems, especially Windows or some browsers do not trust the installation files because they are not digitally signed and/or commonly used yet. Unfortunately, code signing certificates that would help us overcome this cost hundreds of euro per year. This project does not have any funding and therefore can't afford it. It's recommended to verify the checksum of the files if you are worried. Every commit (and therefore published checksum) is signed in this repository.
+
+### Poor performance on Linux
+
+Caused by the disabled hardware acceleration on the Linux. The reason is [issues with the transparency on the Chromium project](https://bugs.chromium.org/p/chromium/issues/detail?id=854601#c7).
 
 ## Developing
 

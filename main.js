@@ -1,4 +1,5 @@
 const isDev = require('electron-is-dev')
+
 const path = require('path')
 const url = require('url')
 const fs = require('fs')
@@ -155,7 +156,15 @@ function createWindow () {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+// Linux has transparency disabled and window creation delayed
+// due to issues with transparency of Chromium on Linux.
+// See https://bugs.chromium.org/p/chromium/issues/detail?id=854601#c7
+if (process.platform === 'linux') {
+  app.disableHardwareAcceleration()
+  app.on('ready', () => setTimeout(createWindow, 100))
+} else {
+  app.on('ready', createWindow)
+}
 
 // Prevent all navigation for security reasons
 // See https://github.com/electron/electron/blob/master/docs/tutorial/security.md#13-disable-or-limit-navigation
