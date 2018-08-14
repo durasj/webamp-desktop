@@ -4,7 +4,8 @@
   "description": "Desktop version of Winamp 2.9 reimplementation in HTML5 and JS",
   "main": "main.js",
   "scripts": {
-    "build": "parcel build --public-url ./ ./src/index.html",
+    "copy": "cp -r ./bundled/* ./dist",
+    "build": "yarn run copy && parcel build --public-url ./ ./src/index.html",
     "watch": "parcel watch --public-url ./ --hmr-hostname 127.0.0.1 --hmr-port 54439 ./src/index.html",
     "electron": "./node_modules/.bin/electron .",
     "start": "yarn run build && electron .",
@@ -45,7 +46,8 @@
     "files": [
       "!.*${/*}",
       "!src${/*}",
-      "!artifacts${/*}"
+      "!artifacts${/*}",
+      "!bundled${/*}"
     ],
     "directories": {
       "buildResources": "res",
@@ -62,7 +64,8 @@
       "target": [
         "AppImage",
         "deb"
-      ]
+      ],
+      "category": "AudioVideo"
     },
     "publish": {
       "provider": "github",
