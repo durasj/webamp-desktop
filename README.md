@@ -17,27 +17,24 @@
 Unofficial app. It has most of the functionality of the original Winamp, but it's still more of a proof of concept. Based on the [Webamp](https://github.com/captbaritone/webamp) - "A reimplementation of Winamp 2.9 in HTML5 and JavaScript." by the [@captbaritone](https://github.com/captbaritone). Linux support via AppImage and .deb package tested on the Ubuntu.
 
 ## Downloads
-- Windows - [portable 64-bit](https://github.com/durasj/webamp-desktop/releases/download/v0.1.0/winamp2-js-desktop-0.1.0.exe)
-- Linux - [AppImage 64-bit](https://github.com/durasj/webamp-desktop/releases/download/v0.1.0/winamp2-js-desktop-0.1.0-x86_64.AppImage), [deb 64-bit](https://github.com/durasj/webamp-desktop/releases/download/v0.1.0/winamp2-js-desktop_0.1.0_amd64.deb)
-- MacOS X - [dmg 64-bit](https://github.com/durasj/webamp-desktop/releases/download/v0.1.0/winamp2-js-desktop-0.1.0.dmg)
+- Windows - [portable 64-bit](https://github.com/durasj/webamp-desktop/releases/download/v0.2.0/webamp-desktop-0.2.0.exe)
+- Linux - [AppImage 64-bit](https://github.com/durasj/webamp-desktop/releases/download/v0.2.0/webamp-desktop-0.2.0-x86_64.AppImage), [deb 64-bit](https://github.com/durasj/webamp-desktop/releases/download/v0.2.0/webamp-desktop_0.2.0_amd64.deb)
+- MacOS X - [dmg 64-bit](https://github.com/durasj/webamp-desktop/releases/download/v0.2.0/webamp-desktop-0.2.0.dmg)
 
 ## Ideas for the future
 - Establish proper integration with the webamp-js by using its API
 - Change packages to installable versions with automatic updates
 - Implement Windows.Media WinRT API
-- Add support for multiple displays
+- Support for multiple displays
+- Support file associations
 - Add features that are not in the web version (via the API)
-- Try to integrate [winampify-js](https://github.com/remigallego/winampify-js)
+- Try to integrate [winampify-js](https://github.com/remigallego/winampify-js), milkdrop can be integrated using microphone (?) due to problems with the DRM
 
 ## Developing
 
 ### Prerequisites
 
-Assuming you have [node.js](https://nodejs.org/en/) with npm installed, make sure you have the latest [yarn](https://yarnpkg.com/lang/en/) and [typescript](https://www.typescriptlang.org/):
-
-```
-npm -g i yarn typescript
-```
+Make sure you have latest [node.js](https://nodejs.org/en/) and [yarn](https://yarnpkg.com/lang/en/).
 
 ### Installing
 
