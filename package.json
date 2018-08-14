@@ -14,10 +14,12 @@
     "pack": "yarn run pack:win && yarn run pack:linux && yarn run pack:mac",
     "dist": "yarn run build && build --x64"
   },
+  "homepage": "https://github.com/durasj/webamp-desktop",
   "repository": "https://github.com/durasj/webamp-desktop",
   "author": "Jakub Duras <jakub@duras.me>",
   "license": "MIT",
   "dependencies": {
+    "electron-is-dev": "^0.3.0",
     "webamp": "^1.1.2"
   },
   "devDependencies": {
@@ -36,12 +38,13 @@
     "Chrome 61"
   ],
   "build": {
-    "appId": "me.duras.webampdesktop",
+    "appId": "me.duras.webamp-desktop",
+    "productName": "Webamp desktop",
+    "copyright": "Copyright © 2018 Jakub Ďuraš",
     "files": [
-      "**/*",
-      "!.git${/*}",
-      "!.vscode${/*}",
-      "!src${/*}"
+      "!.*${/*}",
+      "!src${/*}",
+      "!artifacts${/*}"
     ],
     "directories": {
       "buildResources": "res",
@@ -58,6 +61,11 @@
         "AppImage",
         "deb"
       ]
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "durasj",
+      "releaseType": "draft"
     }
   }
 }

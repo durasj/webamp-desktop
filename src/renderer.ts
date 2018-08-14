@@ -1,7 +1,9 @@
 import Webamp from 'webamp'
 
 const webamp = new Webamp({
-  initialTracks: [
+  // Currently not working in the packaged apps
+  // see https://github.com/durasj/webamp-desktop/issues/2
+  /*initialTracks: [
     {
       metaData: {
         artist: 'DJ Mike Llama',
@@ -9,7 +11,7 @@ const webamp = new Webamp({
       },
       url: './mp3/llama-2.91.mp3'
     }
-  ],
+  ],*/
   initialSkin: {
     url: './skins/base-2.91.wsz'
   },

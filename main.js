@@ -1,14 +1,17 @@
+const isDev = require('electron-is-dev')
+const path = require('path')
+const url = require('url')
+const fs = require('fs')
+
 const electron = require('electron')
 // Module to control application life.
 const app = electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 
-require('electron-debug')({showDevTools: 'undocked'})
-
-const path = require('path')
-const url = require('url')
-const fs = require('fs')
+if (isDev) {
+  require('electron-debug')({showDevTools: 'undocked'})
+}
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -72,10 +75,10 @@ function createWindow () {
     "media-src 'self' blob:",
     "object-src 'self' blob:"
   ]
-  if (process.env.NODE_ENV === 'production') {
-    cspSrc.push("connect-src 'self'")
-  } else {
+  if (isDev) {
     cspSrc.push("connect-src 'self' ws://127.0.0.1:54439")
+  } else {
+    cspSrc.push("connect-src 'self'")
   }
   electron.protocol.interceptStreamProtocol('file', (request, callback) => {
     const url = request.url.substr(8)
