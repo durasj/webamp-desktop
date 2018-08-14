@@ -14,7 +14,7 @@
 
 [![Screenshot of webamp desktop on Windows](./res/screen-win.gif)](https://github.com/durasj/webamp-desktop) [![Screenshot of Webamp on Linux](./res/screen-linux.png)](https://github.com/durasj/webamp-desktop) [![Screenshot of Webamp on Mac OS X](./res/screen-mac.png)](https://github.com/durasj/webamp-desktop)
 
-Unofficial app. It has most of the functionality of the original Winamp, but it's still more of a proof of concept. Based on the [Webamp](https://github.com/captbaritone/webamp) - "A reimplementation of Winamp 2.9 in HTML5 and JavaScript." by the [@captbaritone](https://github.com/captbaritone). Linux support via AppImage and .deb package tested on the Ubuntu.
+Unofficial app. It has most of the functionality of the original Winamp, but it's still more of a proof of concept. Based on the [Webamp](https://github.com/captbaritone/webamp) - "A reimplementation of Winamp 2.9 in HTML5 and JavaScript." by the [@captbaritone](https://github.com/captbaritone). Linux support via AppImage and .deb package tested on the Ubuntu 18.04.
 
 ## Downloads
 - Windows - [web installer 64-bit](https://github.com/durasj/webamp-desktop/releases/download/v0.2.0/webamp-desktop-web-setup-0.2.0.exe)
