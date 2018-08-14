@@ -17,7 +17,7 @@
 Unofficial app. It has most of the functionality of the original Winamp, but it's still more of a proof of concept. Based on the [Webamp](https://github.com/captbaritone/webamp) - "A reimplementation of Winamp 2.9 in HTML5 and JavaScript." by the [@captbaritone](https://github.com/captbaritone). Linux support via AppImage and .deb package tested on the Ubuntu.
 
 ## Downloads
-- Windows - [portable 64-bit](https://github.com/durasj/webamp-desktop/releases/download/v0.2.0/webamp-desktop-0.2.0.exe)
+- Windows - [web installer 64-bit](https://github.com/durasj/webamp-desktop/releases/download/v0.2.0/webamp-desktop-web-setup-0.2.0.exe)
 - Linux - [AppImage 64-bit](https://github.com/durasj/webamp-desktop/releases/download/v0.2.0/webamp-desktop-0.2.0-x86_64.AppImage), [deb 64-bit](https://github.com/durasj/webamp-desktop/releases/download/v0.2.0/webamp-desktop_0.2.0_amd64.deb)
 - MacOS X - [dmg 64-bit](https://github.com/durasj/webamp-desktop/releases/download/v0.2.0/webamp-desktop-0.2.0.dmg)
 
