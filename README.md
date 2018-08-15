@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/durasj/webamp-desktop">
+  <a href="https://webamp-desktop.duras.me/">
     <img src="./res/logo.svg" alt="Webamp on desktop logo" width=384 height=128>
   </a>
 
@@ -12,14 +12,12 @@
 
 <br>
 
-[![Screenshot of webamp desktop on Windows](./res/screen-win.gif)](https://github.com/durasj/webamp-desktop) [![Screenshot of Webamp on Linux](./res/screen-linux.png)](https://github.com/durasj/webamp-desktop) [![Screenshot of Webamp on Mac OS X](./res/screen-mac.png)](https://github.com/durasj/webamp-desktop)
+[![Screenshot of webamp desktop on Windows](./res/screen-win.gif)](https://webamp-desktop.duras.me/) [![Screenshot of Webamp on Linux](./res/screen-linux.png)](https://webamp-desktop.duras.me/) [![Screenshot of Webamp on Mac OS X](./res/screen-mac.png)](https://webamp-desktop.duras.me/)
 
 Unofficial app. It has most of the functionality of the original Winamp, but it's still more of a proof of concept. Based on the [Webamp](https://github.com/captbaritone/webamp) - "A reimplementation of Winamp 2.9 in HTML5 and JavaScript." by the [@captbaritone](https://github.com/captbaritone). Linux support via AppImage and .deb package tested on the Ubuntu 18.04.
 
 ## Downloads
-- Windows - [web installer 64-bit](https://github.com/durasj/webamp-desktop/releases/download/v0.2.0/webamp-desktop-web-setup-0.2.0.exe)
-- Linux - [AppImage 64-bit](https://github.com/durasj/webamp-desktop/releases/download/v0.2.0/webamp-desktop-0.2.0-x86_64.AppImage), [deb 64-bit](https://github.com/durasj/webamp-desktop/releases/download/v0.2.0/webamp-desktop_0.2.0_amd64.deb)
-- MacOS X - [dmg 64-bit](https://github.com/durasj/webamp-desktop/releases/download/v0.2.0/webamp-desktop-0.2.0.dmg)
+Head over to the [webamp-desktop.duras.me](https://webamp-desktop.duras.me/) for the latest download files for your platform.
 
 ## Ideas for the future
 - Establish proper integration with the webamp-js by using its API
