@@ -20,8 +20,8 @@ Unofficial app. It has most of the functionality of the original Winamp, but it'
 Head over to the [webamp-desktop.duras.me](https://webamp-desktop.duras.me/) for the latest download files for your platform.
 
 ## Ideas for the future
-- Establish proper integration with the webamp-js by using its API
-- Change packages to installable versions with automatic updates
+- Change packages to installablers (partly done)
+- Automatic updates / update notifications
 - Implement Windows.Media WinRT API (Taskbar media controls)
 - Support for multiple displays
 - Support file associations
