@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://webamp-desktop.duras.me/">
+  <a href="https://desktop.webamp.org/">
     <img src="./res/logo.svg" alt="Webamp on desktop logo" width=384 height=128>
   </a>
 
@@ -10,7 +10,7 @@
   </p>
 
   <p align="center">
-    <a href="https://webamp-desktop.duras.me" title="Downloads"><img src="https://img.shields.io/github/downloads/durasj/webamp-desktop/total.svg" /></a>
+    <a href="https://desktop.webamp.org" title="Downloads"><img src="https://img.shields.io/github/downloads/durasj/webamp-desktop/total.svg" /></a>
     <a href="https://travis-ci.org/durasj/webamp-desktop" title="Build"><img src="https://img.shields.io/travis/durasj/webamp-desktop/master.svg" alt="Build badge" /></a>
     <a href="https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fdurasj%2Fwebamp-desktop" title="Tweet"><img src="https://img.shields.io/twitter/url/https/github.com/durasj/webamp-desktop.svg?style=social" alt="Tweet badge" /></a>
   </p>
@@ -18,12 +18,12 @@
 
 <br>
 
-[![Screenshot of webamp desktop on Windows](./res/screen-win.gif)](https://webamp-desktop.duras.me/) [![Screenshot of Webamp on Linux](./res/screen-linux.png)](https://webamp-desktop.duras.me/) [![Screenshot of Webamp on Mac OS X](./res/screen-mac.png)](https://webamp-desktop.duras.me/)
+[![Screenshot of webamp desktop on Windows](./res/screen-win.gif)](https://desktop.webamp.org/) [![Screenshot of Webamp on Linux](./res/screen-linux.png)](https://desktop.webamp.org/) [![Screenshot of Webamp on Mac OS X](./res/screen-mac.png)](https://desktop.webamp.org/)
 
 Unofficial app. It has most of the functionality of the original Winamp, but it's still more of a proof of concept. Based on the [Webamp](https://github.com/captbaritone/webamp) - "A reimplementation of Winamp 2.9 in HTML5 and JavaScript." by the [@captbaritone](https://github.com/captbaritone). Linux support via AppImage and .deb package tested on the Ubuntu 18.04.
 
 ## Downloads
-Head over to the [webamp-desktop.duras.me](https://webamp-desktop.duras.me/) for the latest download files for your platform.
+Head over to the [desktop.webamp.org](https://desktop.webamp.org/) for the latest download files for your platform.
 
 ## Ideas for the future
 - Change packages to installablers (partly done)
