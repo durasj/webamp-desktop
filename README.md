@@ -8,6 +8,15 @@
   <p align="center">
     Just like the original, now on your Mac, Windows or a Linux!
   </p>
+
+  <p align="center">
+
+[![Downloads](https://img.shields.io/github/downloads/durasj/webamp-desktop/total.svg)](https://webamp-desktop.duras.me)
+[![Build](https://img.shields.io/travis/durasj/webamp-desktop/master.svg)](https://travis-ci.org/durasj/webamp-desktop)
+[![Twitter](https://img.shields.io/twitter/url/https/github.com/durasj/webamp-desktop.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fdurasj%2Fwebamp-desktop)
+
+
+  </p>
 </p>
 
 <br>
