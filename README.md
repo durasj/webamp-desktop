@@ -11,9 +11,11 @@
 
   <p align="center">
 
-[![Downloads](https://img.shields.io/github/downloads/durasj/webamp-desktop/total.svg)](https://webamp-desktop.duras.me)
-[![Build](https://img.shields.io/travis/durasj/webamp-desktop/master.svg)](https://travis-ci.org/durasj/webamp-desktop)
-[![Twitter](https://img.shields.io/twitter/url/https/github.com/durasj/webamp-desktop.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fdurasj%2Fwebamp-desktop)
+  <a href="https://webamp-desktop.duras.me" title="Downloads"><img src="https://img.shields.io/github/downloads/durasj/webamp-desktop/total.svg" /></a>
+
+  <a href="https://travis-ci.org/durasj/webamp-desktop" title="Build"><img src="https://img.shields.io/travis/durasj/webamp-desktop/master.svg" alt="Build badge" /></a>
+
+  <a href="https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fdurasj%2Fwebamp-desktop" title="Tweet"><img src="https://img.shields.io/twitter/url/https/github.com/durasj/webamp-desktop.svg?style=social" alt="Tweet badge" /></a>
 
 
   </p>
