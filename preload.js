@@ -1,5 +1,5 @@
 const { remote } = require('electron')
-const leftClicky = require('left-clicky')
+const handleTransparency = require('./transparency.js')
 
 // We want to completely disable the eval() for security reasons
 // ESLint will warn about any use of eval(), even this one
@@ -7,38 +7,6 @@ const leftClicky = require('left-clicky')
 window.eval = global.eval = function () {
     throw new Error(`Sorry, this app does not support window.eval().`)
 }
-
-// Handle transparency of skin or are around windows
-// by catching each mouse click and triggering it again
-// on click-through window if it was done on transparent pixel
-document.addEventListener('click', function() {
-    const mainWindow = remote.getCurrentWindow()
-    const cursorPoint = remote.screen.getCursorScreenPoint()
-    const windowBounds = mainWindow.getBounds()
-
-    const cursorWithinBounds =
-      (cursorPoint.x >= windowBounds.x && cursorPoint.x <= (windowBounds.x + windowBounds.width)) &&
-      (cursorPoint.y >= windowBounds.y && cursorPoint.y <= (windowBounds.y + windowBounds.height))
-
-    if (!cursorWithinBounds) {
-        return;
-    }
-
-    mainWindow.webContents.capturePage({
-        x: cursorPoint.x - windowBounds.x,
-        y: cursorPoint.y - windowBounds.y,
-        width: 1,
-        height: 1
-    }, (image) => {
-        const buffer = image.getBitmap()
-
-        if (buffer[3] !== undefined && buffer[3] === 0) {
-            mainWindow.setIgnoreMouseEvents(true)
-            leftClicky.click()
-            mainWindow.setIgnoreMouseEvents(false)
-        }
-    })
-})
 
 /**
  * Electron API wrappers passed to the renderer
@@ -54,6 +22,10 @@ window.minimizeElectronWindow = function () {
 
 window.closeElectronWindow = function () {
     return remote.getCurrentWindow().close()
+}
+
+window.rendered = function () {
+    handleTransparency()
 }
 
 /*window.checkForUpdatesAndNotify = function () {

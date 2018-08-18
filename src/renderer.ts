@@ -39,4 +39,6 @@ const unsubscribeOnClose = webamp.onClose(() => {
 })
 
 // Render after the skin has loaded.
-webamp.renderWhenReady(document.getElementById('webamp'))
+webamp.renderWhenReady(document.getElementById('webamp')).then(
+  () => window.rendered()
+)

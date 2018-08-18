@@ -21,7 +21,6 @@
   "license": "MIT",
   "dependencies": {
     "electron-is-dev": "^0.3.0",
-    "left-clicky": "^0.1.0",
     "webamp": "^1.1.2"
   },
   "devDependencies": {
