@@ -54,7 +54,7 @@ function handleTransparency() {
         function enableTransparencyChecking() {
           clearInterval(transparencyInterval)
           transparencyInterval = setInterval(() => {
-            const cursorPoint = electron.screen.getCursorScreenPoint()
+            const cursorPoint = remote.screen.getCursorScreenPoint()
             const windowBounds = mainWindow.getBounds()
 
             const cursorWithinBounds =
