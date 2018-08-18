@@ -3,23 +3,24 @@ const { remote } = require('electron')
 function handleTransparency() {
     const mainWindow = remote.getCurrentWindow()
 
-    // Windows, Mac OS. Workaround needed for Linux (below).
+    // Mac OS already handles transparent area around UI well
+    // TODO: Only problem is it doesn't handle it well within the UI (skin)
+
+    // Windows
     // Ignoring mouse events (propagating "mouseover" to UI below)
     // on transparent areas around webamp UI (windows and context menu).
-    if (process.platform !== 'linux') {
+    if (process.platform === 'win32') {
         mainWindow.setIgnoreMouseEvents(true, { forward: true })
         let ignored = true
 
         const mouseenterHandler = () => {
             if (ignored) {
-                console.log('Entering')
                 mainWindow.setIgnoreMouseEvents(false)
                 ignored = false
             }
         }
         const mouseleaveHandler = (e) => {
             if (e.toElement.offsetParent.id === 'webamp') {
-                console.log('Leaving')
                 mainWindow.setIgnoreMouseEvents(true, { forward: true })
                 ignored = true
             }
@@ -30,7 +31,6 @@ function handleTransparency() {
                 e.toElement.addEventListener('mouseleave', mouseleaveHandler)
                 e.toElement.addEventListener('click', () => {
                     // Removing context menu means we have to trigger leave too
-                    console.log('Leaving')
                     mainWindow.setIgnoreMouseEvents(true, { forward: true })
                     ignored = true
                 })
