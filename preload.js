@@ -12,8 +12,9 @@ window.eval = global.eval = function () {
 // by catching each mouse click and triggering it again
 // on click-through window if it was done on transparent pixel
 document.addEventListener('click', function() {
-    const cursorPoint = electron.screen.getCursorScreenPoint()
-    const windowBounds = remote.getCurrentWindow().getBounds()
+    const mainWindow = remote.getCurrentWindow()
+    const cursorPoint = remote.screen.getCursorScreenPoint()
+    const windowBounds = mainWindow.getBounds()
 
     const cursorWithinBounds =
       (cursorPoint.x >= windowBounds.x && cursorPoint.x <= (windowBounds.x + windowBounds.width)) &&
@@ -31,7 +32,7 @@ document.addEventListener('click', function() {
     }, (image) => {
         const buffer = image.getBitmap()
 
-        if (buffer[3] && buffer[3] === 0) {
+        if (buffer[3] !== undefined && buffer[3] === 0) {
             mainWindow.setIgnoreMouseEvents(true)
             leftClicky.click()
             mainWindow.setIgnoreMouseEvents(false)
@@ -54,3 +55,10 @@ window.minimizeElectronWindow = function () {
 window.closeElectronWindow = function () {
     return remote.getCurrentWindow().close()
 }
+
+/*window.checkForUpdatesAndNotify = function () {
+    var log = require('electron-log')
+    log.transports.file.level = 'debug'
+    autoUpdater.logger = log
+    autoUpdater.checkForUpdatesAndNotify()
+}*/

@@ -64,6 +64,7 @@ function createWindow () {
     height: height,
     transparent: true,
     frame: false,
+    hasShadow: false,
     show: false,
     resizable: false,
     movable: false,
