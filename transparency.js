@@ -3,15 +3,13 @@ const { remote } = require('electron')
 function handleTransparency() {
     const mainWindow = remote.getCurrentWindow()
 
-    // Mac OS already handles transparent area around UI well
-    // TODO: Only problem is it doesn't handle it well within the UI (skin)
-    // TODO: Also, only clicks will get propagated. forward: true doesn't work
+    // Mac OS already handles it around the UI (windows and context menu) well.
+    // TODO: Check if forward: true still doesn't work reliably
     // if the webamp windows is not in the foreground (no events triggered)
 
     // Windows
-    // Ignoring mouse events (propagating "mouseover" to UI below)
-    // on transparent areas around webamp UI (windows and context menu).
-    // Works by using mousein and mouseout na forwarding when ignoring.
+    // Ignoring mouse events around the UI (windows and context menu).
+    // Works by using mousein and mouseout and forwarding when ignoring.
     if (process.platform === 'win32') {
         mainWindow.setIgnoreMouseEvents(true, { forward: true })
         let ignored = true
@@ -64,13 +62,12 @@ function handleTransparency() {
         rebindMouseEvents()
     }
 
-    // Mac OS and Linux
-    // Ignoring mouse events when not over windows and context menu
-    // and propagating clicks if they happen on the transparent area of skin.
-    // We'll track and mark position of webamp windows and context menu
-    // and poll mouse to see if it is within the bounds.
-    // TODO: Check if we can use forward: true on these platforms too.
-    if (process.platform === 'darwin' || process.platform === 'linux') {
+    // Linux
+    // Ignoring mouse events around the UI (windows and context menu).
+    // We'll track and save position of webamp windows and context menu
+    // and poll mouse to see if it is within the saved bounds.
+    // TODO: Check if we can use forward: true on this platform too.
+    if (process.platform === 'linux') {
         /**
          * @type {[id: string]: {minX: number, maxX: number, minY: number, maxY: number} }
          */
@@ -127,6 +124,33 @@ function handleTransparency() {
             for (const webampWindow of document.querySelectorAll('#webamp .window')) {
                 watchWindowAttributes(webampWindow.parentElement)
             }
+
+            // Context menu is watched just by observing adding and removing of the node.
+            // When added, whole body is position of the contet menu.
+            const contextMenuObserver = new MutationObserver((mutationsList) => {
+                for (const mutation of mutationsList) {
+                    if (mutation.addedNodes.length > 0
+                        && mutation.addedNodes[0].id === 'webamp-context-menu'
+                    ) {
+                        elementPositions['webamp-context-menu'] = {
+                            minX: 0,
+                            minY: 0,
+                            maxX: 9999,
+                            maxY: 9999,
+                        }
+                    }
+
+                    if (mutation.removedNodes.length > 0
+                        && mutation.removedNodes[0].id === 'webamp-context-menu'
+                    ) {
+                        delete elementPositions['webamp-context-menu']
+                    }
+                }
+            })
+            contextMenuObserver.observe(
+                document.querySelector('body'),
+                { childList: true }
+            )
         }
 
         const enableTransparencyChecking = () => {
@@ -145,12 +169,12 @@ function handleTransparency() {
                 if (!cursorWithinBounds) {
                     return
                 }
-    
+
                 const positionInWindow = {
                     x: cursorPoint.x - windowBounds.x,
                     y: cursorPoint.y - windowBounds.y,
                 }
-    
+
                 for (const elementId of Object.keys(elementPositions)) {
                     const elementPosition = elementPositions[elementId]
     
@@ -197,6 +221,50 @@ function handleTransparency() {
 
         setupWatchingElements()
         enableTransparencyChecking()
+    }
+
+    // Linux and Mac OS
+    // Transparency within the windows (skin).
+    // Works by capturing each click and replaying it.
+    if (process.platform === 'darwin' || process.platform === 'linux') {
+        const leftClicky = require('left-clicky')
+
+        const clickHandler = () => {
+            const cursorPoint = remote.screen.getCursorScreenPoint()
+            const windowBounds = mainWindow.getBounds()
+
+            mainWindow.webContents.capturePage({
+                x: cursorPoint.x - windowBounds.x,
+                y: cursorPoint.y - windowBounds.y,
+                width: 1,
+                height: 1
+            }, (image) => {
+                const buffer = image.getBitmap()
+                if (buffer[3] && buffer[3] === 0) {
+                    mainWindow.setIgnoreMouseEvents(true)
+                    leftClicky.click()
+                    mainWindow.setIgnoreMouseEvents(false)
+                }
+            })
+        }
+
+        const rebindClickEvent = () => {
+            const webampWindows = document.querySelectorAll('#webamp .window')
+            for (webampWindow of webampWindows) {
+                webampWindow.removeEventListener('click', clickHandler)
+                webampWindow.addEventListener('click', clickHandler)
+            }
+        }
+
+        const observer = new MutationObserver(() => {
+            rebindClickEvent()
+        })
+        observer.observe(
+            document.querySelector('#main-window').parentElement.parentElement,
+            { childList: true }
+        )
+
+        rebindClickEvent()
     }
 }
 
