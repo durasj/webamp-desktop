@@ -229,7 +229,7 @@ function handleTransparency() {
 
         const clickHandler = (e) => {
             // Handle only left clicks
-            if (e.button !== 1) {
+            if (e.button !== 0) {
                 return
             }
 
@@ -270,7 +270,7 @@ function handleTransparency() {
                     height: 1
                 }, (image) => {
                     const buffer = image.getBitmap()
-                    if (buffer[3] && buffer[3] === 0) {
+                    if (buffer[3] !== undefined && buffer[3] === 0) {
                         mainWindow.setIgnoreMouseEvents(true)
                         leftClicky.click()
                         mainWindow.setIgnoreMouseEvents(false)
