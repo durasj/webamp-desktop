@@ -1,4 +1,6 @@
-import Webamp from 'webamp'
+// Temporary switch to custom webamp build
+// import Webamp from 'webamp'
+import Webamp from './webamp.bundle.js'
 
 const webamp = new Webamp({
   // Currently not working in the packaged apps
