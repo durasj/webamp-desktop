@@ -191,7 +191,6 @@ function handleTransparency() {
                         if (ignored) {
                             mainWindow.setIgnoreMouseEvents(false)
                             ignored = false
-                            console.log('Enabling')
                         }
                         return
                     }
@@ -200,7 +199,6 @@ function handleTransparency() {
                 if (!ignored) {
                     mainWindow.setIgnoreMouseEvents(true)
                     ignored = true
-                    console.log('Disabling')
                 }
             }, 200)
         }
@@ -229,42 +227,59 @@ function handleTransparency() {
     if (process.platform === 'darwin' || process.platform === 'linux') {
         const leftClicky = require('left-clicky')
 
-        const clickHandler = () => {
+        const clickHandler = (e) => {
+            // Handle only left clicks
+            if (e.button !== 1) {
+                return
+            }
+
             const cursorPoint = remote.screen.getCursorScreenPoint()
             const windowBounds = mainWindow.getBounds()
-
-            mainWindow.webContents.capturePage({
+            const positionInWindow = {
                 x: cursorPoint.x - windowBounds.x,
                 y: cursorPoint.y - windowBounds.y,
-                width: 1,
-                height: 1
-            }, (image) => {
-                const buffer = image.getBitmap()
-                if (buffer[3] && buffer[3] === 0) {
-                    mainWindow.setIgnoreMouseEvents(true)
-                    leftClicky.click()
-                    mainWindow.setIgnoreMouseEvents(false)
-                }
-            })
-        }
+            }
 
-        const rebindClickEvent = () => {
             const webampWindows = document.querySelectorAll('#webamp .window')
+
+            let within = false
             for (webampWindow of webampWindows) {
-                webampWindow.removeEventListener('click', clickHandler)
-                webampWindow.addEventListener('click', clickHandler)
+                const boundingRect = webampWindow.getBoundingClientRect()
+                const windowPosition = {
+                    minX: boundingRect.x,
+                    minY: boundingRect.y,
+                    maxX: boundingRect.x + boundingRect.width,
+                    maxY: boundingRect.y + boundingRect.height,
+                }
+
+                const withinX = (positionInWindow.x > windowPosition.minX)
+                    && (positionInWindow.x < windowPosition.maxX)
+                const withinY = (positionInWindow.y > windowPosition.minY)
+                    && (positionInWindow.y < windowPosition.maxY)
+                within = withinX && withinY
+                if (within) {
+                    break
+                }
+            }
+
+            if (within) {
+                mainWindow.webContents.capturePage({
+                    x: positionInWindow.x,
+                    y: positionInWindow.y,
+                    width: 1,
+                    height: 1
+                }, (image) => {
+                    const buffer = image.getBitmap()
+                    if (buffer[3] && buffer[3] === 0) {
+                        mainWindow.setIgnoreMouseEvents(true)
+                        leftClicky.click()
+                        mainWindow.setIgnoreMouseEvents(false)
+                    }
+                })
             }
         }
 
-        const observer = new MutationObserver(() => {
-            rebindClickEvent()
-        })
-        observer.observe(
-            document.querySelector('#main-window').parentElement.parentElement,
-            { childList: true }
-        )
-
-        rebindClickEvent()
+        document.addEventListener('click', clickHandler)
     }
 }
 
