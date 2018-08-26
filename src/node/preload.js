@@ -1,5 +1,6 @@
 const { remote } = require('electron')
 const handleTransparency = require('./transparency.js')
+const handleThumbnail = require('./thumbnail.js')
 
 // We want to completely disable the eval() for security reasons
 // ESLint will warn about any use of eval(), even this one
@@ -26,4 +27,5 @@ window.closeElectronWindow = function () {
 
 window.rendered = function () {
     handleTransparency()
+    handleThumbnail()
 }
