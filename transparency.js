@@ -222,7 +222,7 @@ function handleTransparency() {
         enableTransparencyChecking()
     }
 
-    // Linux and Mac OS
+    // Linux
     // Transparency within the windows (skin).
     // Works by capturing each click and replaying it.
     if (process.platform === 'linux') {
