@@ -25,8 +25,7 @@
     "electron-updater": "^3.1.1",
     "html-to-text": "^4.0.0",
     "left-clicky": "0.1.1",
-    "mime-types": "^2.1.19",
-    "webamp": "^1.1.2"
+    "mime-types": "^2.1.19"
   },
   "devDependencies": {
     "@types/electron": "^1.6.10",
@@ -37,7 +36,8 @@
     "eslint": "^5.3.0",
     "parcel-bundler": "^1.9.7",
     "tslint": "^5.11.0",
-    "typescript": "^2.9.2"
+    "typescript": "^2.9.2",
+    "webamp": "^1.1.2"
   },
   "browserslist": [
     "Chrome 61"
@@ -48,7 +48,7 @@
     "copyright": "Copyright © 2018 Jakub Ďuraš",
     "files": [
       "!.*${/*}",
-      "!src${/*}",
+      "!src/*.*",
       "!artifacts${/*}",
       "!docs${/*}",
       "!bundled${/*}"
