@@ -1,4 +1,8 @@
 const isDev = require('electron-is-dev')
+const mime = require('mime-types')
+const { autoUpdater } = require('electron-updater')
+const log = require('electron-log')
+const htmlToText = require('html-to-text')
 
 const path = require('path')
 const url = require('url')
@@ -12,11 +16,52 @@ const BrowserWindow = electron.BrowserWindow
 
 if (isDev) {
   require('electron-debug')({showDevTools: 'undocked'})
+  log.transports.file.level = 'debug'
+} else {
+  log.transports.file.level = 'warn'
 }
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+
+function checkForUpdatesAndNotify () {
+  if (isDev) {
+      console.warn('Updates are not checked in dev mode')
+      return
+  }
+
+  autoUpdater.autoDownload = false
+  autoUpdater.autoInstallOnAppQuit = false
+  autoUpdater.fullChangelog = true
+  autoUpdater.logger = log
+  autoUpdater.on('update-available', (info) => {
+    log.info('Got info about update available', info)
+    electron.dialog.showMessageBox({
+      type: 'none',
+      buttons: ['Open', 'Cancel'],
+      title: 'New version available',
+      message: [
+        `There is a new version ${info.version}.`,
+        ` Would you like to open the download page?`,
+      ].join(''),
+      detail: htmlToText.fromString(
+        info.releaseNotes.reduce((acc, n) => acc + n.version + '<hr>' + n.note, ''),
+        { singleNewLineParagraphs: true }
+      ),
+      noLink: true,
+    }, (choice) => {
+      console.log('Choice is', choice)
+      if (choice === 0) {
+        electron.shell.openExternal('https://desktop.webamp.org')
+      }
+    })
+  })
+  autoUpdater.on('error', (err) => {
+    log.error('Update check failed', err)
+  })
+  autoUpdater.checkForUpdates()
+}
 
 function createWindow () {
   /**
@@ -39,11 +84,19 @@ function createWindow () {
   electron.protocol.interceptStreamProtocol('file', (request, callback) => {
     const url = request.url.substr(8)
     const filePath = path.normalize(`${__dirname}/${url}`)
+    const contentType = mime.contentType(path.extname(request.url))
+
     callback({
       statusCode: fs.existsSync(filePath) ? 200 : 404,
       headers: {
-        ...request.headers,
-        'Content-Security-Policy': cspSrc.join(';')
+        'Access-Control-Allow-Origin': '*',
+        'Cache-Control': 'private, max-age=0',
+        'Content-Type': contentType,
+        'Content-Security-Policy': cspSrc.join(';'),
+        'Date': (new Date).toUTCString(),
+        'Server': 'Electron',
+        'X-Frame-Options': 'DENY',
+        'X-XSS-Protection': '1; mode=block',
       },
       data: fs.createReadStream(filePath)
     })
@@ -86,6 +139,7 @@ function createWindow () {
   // and show window once it's ready (to prevent flashing)
   mainWindow.once('ready-to-show', () => {
     mainWindow.show()
+    checkForUpdatesAndNotify()
   })
 
   // Emitted when the window is closed.
