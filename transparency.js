@@ -5,7 +5,8 @@ function handleTransparency() {
 
     // Mac OS already handles it around the UI (windows and context menu) well.
     // TODO: Check if forward: true still doesn't work reliably
-    // if the webamp windows is not in the foreground (no events triggered)
+    // if the webamp windows is not in the foreground (no events triggered).
+    // TODO: Check if skin transparency can be implemented without performance hit.
 
     // Windows
     // Ignoring mouse events around the UI (windows and context menu).
