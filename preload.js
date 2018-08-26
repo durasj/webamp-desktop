@@ -1,4 +1,5 @@
-const remote = require('electron').remote
+const { remote } = require('electron')
+const handleTransparency = require('./transparency.js')
 
 // We want to completely disable the eval() for security reasons
 // ESLint will warn about any use of eval(), even this one
@@ -21,4 +22,8 @@ window.minimizeElectronWindow = function () {
 
 window.closeElectronWindow = function () {
     return remote.getCurrentWindow().close()
+}
+
+window.rendered = function () {
+    handleTransparency()
 }

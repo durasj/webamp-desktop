@@ -1,4 +1,6 @@
-import Webamp from 'webamp'
+// Temporary switch to custom webamp build
+// import Webamp from 'webamp'
+import Webamp from './webamp.bundle.js'
 
 const webamp = new Webamp({
   // Currently not working in the packaged apps
@@ -39,4 +41,6 @@ const unsubscribeOnClose = webamp.onClose(() => {
 })
 
 // Render after the skin has loaded.
-webamp.renderWhenReady(document.getElementById('webamp'))
+webamp.renderWhenReady(document.getElementById('webamp')).then(
+  () => window.rendered()
+)
