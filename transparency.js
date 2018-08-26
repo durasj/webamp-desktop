@@ -224,7 +224,7 @@ function handleTransparency() {
     // Linux and Mac OS
     // Transparency within the windows (skin).
     // Works by capturing each click and replaying it.
-    if (process.platform === 'darwin' || process.platform === 'linux') {
+    if (process.platform === 'linux') {
         const leftClicky = require('left-clicky')
 
         const clickHandler = (e) => {
