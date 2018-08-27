@@ -26,12 +26,12 @@ Unofficial app. It has most of the functionality of the original Winamp, but it'
 Head over to the [desktop.webamp.org](https://desktop.webamp.org/) for the latest download files for your platform.
 
 ## Ideas for the future
-- Change packages to installablers (partly done)
-- Automatic updates / update notifications
-- Implement Windows.Media WinRT API (Taskbar media controls)
+- Automatic updates (prepared, notifications already done)
+- Implement Taskbar media control buttons
+- Media Keys support (Play, Pause, Stop, Previous, Next)
+- Implement Windows.Media.Playback.MediaPlayer WinRT API
 - Support for multiple displays
 - Support file associations
-- Media Keys support (Play, Pause, Stop, Previous, Next)
 - Add features that are not in the web version (via the API)
 - Try to integrate [winampify-js](https://github.com/remigallego/winampify-js), milkdrop can be integrated using microphone (?) due to problems with the DRM
 
