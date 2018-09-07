@@ -34,7 +34,10 @@ describe('Basic functionality', () => {
         const electronWindowCount = await app.client.getWindowCount()
         expect(electronWindowCount).toBe(1)
 
-        const mainExists = await app.client.isExisting('#webamp #main-window')
+        const mainExists = await app.client.waitForExist(
+            '#webamp #main-window',
+            5000,
+        )
         expect(mainExists).toBeTruthy()
     })
 
