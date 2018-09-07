@@ -25,9 +25,12 @@ before_script:
 - git lfs pull
 # For Electron e2e UI testing
 # See https://github.com/electron/spectron#on-travis-ci
-- "export DISPLAY=:99.0"
-- "sh -e /etc/init.d/xvfb start"
-- sleep 3 # give xvfb some time to start
+- |
+  if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+    export DISPLAY=:99.0
+    sh -e /etc/init.d/xvfb start
+    sleep 3 # give xvfb some time to start
+  fi
 script:
 - yarn test
 - |
