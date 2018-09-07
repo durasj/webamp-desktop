@@ -40,7 +40,11 @@ const unsubscribeOnClose = webamp.onClose(() => {
   unsubscribeOnClose()
 })
 
+webamp.onTrackDidChange((ch) => {
+  console.log('Change', ch)
+})
+
 // Render after the skin has loaded.
-webamp.renderWhenReady(document.getElementById('webamp')).then(
+webamp.renderWhenReady(document.getElementById('app')).then(
   () => window.rendered()
 )
