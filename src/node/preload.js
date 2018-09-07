@@ -9,6 +9,11 @@ window.eval = global.eval = function () {
     throw new Error(`Sorry, this app does not support window.eval().`)
 }
 
+// Add require for e2e spectron tests
+if (process.env.NODE_ENV === 'test') {
+    window.spectronRequire = require
+}
+
 /**
  * Electron API wrappers passed to the renderer
  *
