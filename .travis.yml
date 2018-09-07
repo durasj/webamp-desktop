@@ -32,7 +32,7 @@ before_script:
     sleep 3 # give xvfb some time to start
   fi
 script:
-- yarn test
+- yarn build && yarn test
 - |
   if [ "$TRAVIS_OS_NAME" == "linux" ]; then
     docker run --rm \
