@@ -7,7 +7,7 @@ function interceptStreamProtocol() {
   // Content security policy
   const cspSrc = [
     "default-src 'none'",
-    "script-src 'self'",
+    "script-src 'self' 'unsafe-inline'",
     "style-src 'self' 'unsafe-inline' data:",
     "img-src 'self' data:",
     "font-src 'self' data:",

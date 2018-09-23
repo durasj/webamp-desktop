@@ -2,6 +2,8 @@ const isDev = require('electron-is-dev')
 const path = require('path')
 const url = require('url')
 
+const { default: installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = require('electron-devtools-installer');
+
 const checkForUpdatesAndNotify = require('./src/node/updates.js')
 const interceptStreamProtocol = require('./src/node/protocol.js')
 
@@ -18,6 +20,14 @@ if (isDev) {
 let mainWindow
 
 function createWindow() {
+  installExtension(REACT_DEVELOPER_TOOLS)
+    .then((name) => console.log(`Added Extension:  ${name}`))
+    .catch((err) => console.log('An error occurred: ', err));
+
+  installExtension(REDUX_DEVTOOLS)
+    .then((name) => console.log(`Added Extension:  ${name}`))
+    .catch((err) => console.log('An error occurred: ', err));
+
   electron.protocol.interceptStreamProtocol(
     'file',
     interceptStreamProtocol(),
@@ -85,16 +95,16 @@ if (process.platform === 'linux') {
   app.on('ready', createWindow)
 }
 
-// Prevent all navigation for security reasons
-// See https://github.com/electron/electron/blob/master/docs/tutorial/security.md#13-disable-or-limit-navigation
+  // Prevent all navigation for security reasons
+  // See https://github.com/electron/electron/blob/master/docs/tutorial/security.md#13-disable-or-limit-navigation
 app.on('web-contents-created', (event, contents) => {
   contents.on('will-navigate', (event, navigationUrl) => {
     event.preventDefault()
   })
 })
-// Prevent new window creation for security reasons
-// and open the URLs in the default browser instead
-// See https://github.com/electron/electron/blob/master/docs/tutorial/security.md#14-disable-or-limit-creation-of-new-windows
+  // Prevent new window creation for security reasons
+  // and open the URLs in the default browser instead
+  // See https://github.com/electron/electron/blob/master/docs/tutorial/security.md#14-disable-or-limit-creation-of-new-windows
 app.on('web-contents-created', (event, contents) => {
   contents.on('new-window', (event, navigationUrl) => {
     const parsedUrl = url.parse(navigationUrl)
