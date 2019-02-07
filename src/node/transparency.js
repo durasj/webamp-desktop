@@ -11,7 +11,7 @@ function handleTransparency() {
     // Windows
     // Ignoring mouse events around the UI (windows and context menu).
     // Works by using mousein and mouseout and forwarding when ignoring.
-    if (process.platform === 'win32') {
+    if (process.platform === 'win32' && 1 == 2) {
         mainWindow.setIgnoreMouseEvents(true, { forward: true })
         let ignored = true
 
@@ -68,7 +68,7 @@ function handleTransparency() {
     // We'll track and save position of webamp windows and context menu
     // and poll mouse to see if it is within the saved bounds.
     // TODO: Check if we can use forward: true on this platform too.
-    if (process.platform === 'linux') {
+    if (process.platform === 'linux' && 1 == 0) {
         /**
          * @type {[id: string]: {minX: number, maxX: number, minY: number, maxY: number} }
          */
@@ -222,65 +222,88 @@ function handleTransparency() {
         enableTransparencyChecking()
     }
 
-    // Linux
-    // Transparency within the windows (skin).
-    // Works by capturing each click and replaying it.
-    if (process.platform === 'linux') {
-        const leftClicky = require('left-clicky')
+    if (process.platform === 'win32' || process.platform === 'linux') {
+        /**
+         * @type {[id: string]: {x: number, y: number, width: number, height: number} }
+         */
+        const elementPositions = {}
 
-        const clickHandler = (e) => {
-            // Handle only left clicks
-            if (e.button !== 0) {
-                return
-            }
-
-            const cursorPoint = remote.screen.getCursorScreenPoint()
-            const windowBounds = mainWindow.getBounds()
-            const positionInWindow = {
-                x: cursorPoint.x - windowBounds.x,
-                y: cursorPoint.y - windowBounds.y,
-            }
-
-            const webampWindows = document.querySelectorAll('#webamp .window')
-
-            let within = false
-            for (webampWindow of webampWindows) {
-                const boundingRect = webampWindow.getBoundingClientRect()
-                const windowPosition = {
-                    minX: boundingRect.x,
-                    minY: boundingRect.y,
-                    maxX: boundingRect.x + boundingRect.width,
-                    maxY: boundingRect.y + boundingRect.height,
+        const setupWatchingElements = () => {
+            const watchWindowAttributes = (webampWindowWrapper) => {
+                // Removed from the DOM
+                if (webampWindowWrapper.parentElement === null) {
+                    delete elementPositions[webampWindowWrapper.children[0].id]
+                    return
                 }
 
-                const withinX = (positionInWindow.x > windowPosition.minX)
-                    && (positionInWindow.x < windowPosition.maxX)
-                const withinY = (positionInWindow.y > windowPosition.minY)
-                    && (positionInWindow.y < windowPosition.maxY)
-                within = withinX && withinY
-                if (within) {
-                    break
+                const recalculateElementPositions = (windowWrapper) => {
+                    const recalcWindow = windowWrapper.children[0]
+                    const boundingRect = recalcWindow.getBoundingClientRect()
+
+                    elementPositions[recalcWindow.id] = boundingRect
+                    console.log('Setting windows shape', Object.values(elementPositions))
+                    mainWindow.setShape(Object.values(elementPositions))
                 }
+
+                const observer = new MutationObserver(
+                    (mutationsList) => recalculateElementPositions(
+                        mutationsList[0].target
+                    )
+                )
+                observer.observe(
+                    webampWindowWrapper,
+                    { attributes: true }
+                )
+                recalculateElementPositions(webampWindowWrapper)
             }
 
-            if (within) {
-                mainWindow.webContents.capturePage({
-                    x: positionInWindow.x,
-                    y: positionInWindow.y,
-                    width: 1,
-                    height: 1
-                }, (image) => {
-                    const buffer = image.getBitmap()
-                    if (buffer[3] !== undefined && buffer[3] === 0) {
-                        mainWindow.setIgnoreMouseEvents(true)
-                        leftClicky.click()
-                        mainWindow.setIgnoreMouseEvents(false)
+            const observer = new MutationObserver((mutationsList) => {
+                for (const mutation of mutationsList) {
+                    const changedNodes =
+                        mutation.addedNodes.length > 0 ? mutation.addedNodes : mutation.removedNodes
+                    for (const changedNode of changedNodes) {
+                        watchWindowAttributes(changedNode)
                     }
-                })
+                }
+            })
+            observer.observe(
+                document.querySelector('#main-window').parentElement.parentElement,
+                { childList: true }
+            )
+
+            for (const webampWindow of document.querySelectorAll('#webamp .window')) {
+                watchWindowAttributes(webampWindow.parentElement)
             }
+
+            // Context menu is watched just by observing adding and removing of the node.
+            // When added, whole body is position of the contet menu.
+            const contextMenuObserver = new MutationObserver((mutationsList) => {
+                for (const mutation of mutationsList) {
+                    if (mutation.addedNodes.length > 0
+                        && mutation.addedNodes[0].id === 'webamp-context-menu'
+                    ) {
+                        elementPositions['webamp-context-menu'] = {
+                            minX: 0,
+                            minY: 0,
+                            maxX: 9999,
+                            maxY: 9999,
+                        }
+                    }
+
+                    if (mutation.removedNodes.length > 0
+                        && mutation.removedNodes[0].id === 'webamp-context-menu'
+                    ) {
+                        delete elementPositions['webamp-context-menu']
+                    }
+                }
+            })
+            contextMenuObserver.observe(
+                document.querySelector('body'),
+                { childList: true }
+            )
         }
 
-        document.addEventListener('click', clickHandler)
+        setupWatchingElements()
     }
 }
 
