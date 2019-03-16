@@ -221,67 +221,6 @@ function handleTransparency() {
         setupWatchingElements()
         enableTransparencyChecking()
     }
-
-    // Linux
-    // Transparency within the windows (skin).
-    // Works by capturing each click and replaying it.
-    if (process.platform === 'linux') {
-        const leftClicky = require('left-clicky')
-
-        const clickHandler = (e) => {
-            // Handle only left clicks
-            if (e.button !== 0) {
-                return
-            }
-
-            const cursorPoint = remote.screen.getCursorScreenPoint()
-            const windowBounds = mainWindow.getBounds()
-            const positionInWindow = {
-                x: cursorPoint.x - windowBounds.x,
-                y: cursorPoint.y - windowBounds.y,
-            }
-
-            const webampWindows = document.querySelectorAll('#webamp .window')
-
-            let within = false
-            for (webampWindow of webampWindows) {
-                const boundingRect = webampWindow.getBoundingClientRect()
-                const windowPosition = {
-                    minX: boundingRect.x,
-                    minY: boundingRect.y,
-                    maxX: boundingRect.x + boundingRect.width,
-                    maxY: boundingRect.y + boundingRect.height,
-                }
-
-                const withinX = (positionInWindow.x > windowPosition.minX)
-                    && (positionInWindow.x < windowPosition.maxX)
-                const withinY = (positionInWindow.y > windowPosition.minY)
-                    && (positionInWindow.y < windowPosition.maxY)
-                within = withinX && withinY
-                if (within) {
-                    break
-                }
-            }
-
-            if (within) {
-                mainWindow.webContents.capturePage({
-                    x: positionInWindow.x,
-                    y: positionInWindow.y,
-                    width: 1,
-                    height: 1
-                }, (image) => {
-                    const buffer = image.getBitmap()
-                    if (buffer[3] !== undefined && buffer[3] === 0) {
-                        mainWindow.setIgnoreMouseEvents(true)
-                        leftClicky.click()
-                        mainWindow.setIgnoreMouseEvents(false)
-                    }
-                })
-            }
-        }
-
-        document.addEventListener('click', clickHandler)
-    }
 }
 
 module.exports = handleTransparency

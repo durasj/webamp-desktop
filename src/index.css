@@ -22,13 +22,13 @@ time, mark, audio, video {
     vertical-align: baseline;
 }
 
-html {
+html, body {
     overflow: hidden;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
 }
 
-#webamp {
-    width: 100%;
-    height: 100%;
+#app {
+    width: 100vw;
+    height: 100vh;
 }
