@@ -85,17 +85,15 @@ if (process.platform === 'linux') {
   app.on('ready', createWindow)
 }
 
-// Prevent all navigation for security reasons
-// See https://github.com/electron/electron/blob/master/docs/tutorial/security.md#13-disable-or-limit-navigation
 app.on('web-contents-created', (event, contents) => {
+  // Prevent all navigation for security reasons
+  // See https://github.com/electron/electron/blob/master/docs/tutorial/security.md#13-disable-or-limit-navigation
   contents.on('will-navigate', (event, navigationUrl) => {
     event.preventDefault()
   })
-})
-// Prevent new window creation for security reasons
-// and open the URLs in the default browser instead
-// See https://github.com/electron/electron/blob/master/docs/tutorial/security.md#14-disable-or-limit-creation-of-new-windows
-app.on('web-contents-created', (event, contents) => {
+  // Prevent new window creation for security reasons
+  // and open the URLs in the default browser instead
+  // See https://github.com/electron/electron/blob/master/docs/tutorial/security.md#14-disable-or-limit-creation-of-new-windows
   contents.on('new-window', (event, navigationUrl) => {
     const parsedUrl = url.parse(navigationUrl)
 

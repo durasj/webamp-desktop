@@ -31,7 +31,6 @@ function checkForUpdatesAndNotify() {
       ),
       noLink: true,
     }, (choice) => {
-      console.log('Choice is', choice)
       if (choice === 0) {
         electron.shell.openExternal('https://desktop.webamp.org')
       }

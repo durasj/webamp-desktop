@@ -22,11 +22,21 @@
         }
 
         .columns.features {
-            margin: 2em 0;
+            padding: 2em 0;
+            background-image: url('background-win.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
         }
 
         .features p:not(:last-of-type) {
             margin-bottom: 2rem;
+        }
+
+        .column.preview {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         [v-cloak] {
@@ -88,7 +98,7 @@
                         <p>Compatibility with any .wsz skin written for the Winamp 2.9. Load any classic Winamp skin just by
                             dragging it onto the main window. Transparency supported!</p>
                     </div>
-                    <div class="column has-text-centered">
+                    <div class="column has-text-centered preview">
                         <img src="./screen.gif" alt="Webamp screenshot on Windows" width="275" height="348">
                     </div>
                     <div class="column has-text-left has-text-centered-mobile">

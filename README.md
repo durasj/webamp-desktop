@@ -26,14 +26,24 @@ Unofficial app. It has most of the functionality of the original Winamp, but it'
 Head over to the [desktop.webamp.org](https://desktop.webamp.org/) for the latest download files for your platform.
 
 ## Ideas for the future
-- Automatic updates (prepared, notifications already done)
+
+### Higher priority
+
+- "Media Keys" support (Play, Pause, Stop, Previous, Next) via [Media Transport Controls](https://docs.microsoft.com/en-us/windows/uwp/audio-video-camera/system-media-transport-controls) on Windows, MPRemoteCommandCenter on Mac and [D-BUS on Linux](https://specifications.freedesktop.org/mpris-spec/latest/) - inspiration from [electron-media-service](https://github.com/MarshallOfSound/electron-media-service)
 - Implement Taskbar media control buttons
-- Media Keys support (Play, Pause, Stop, Previous, Next)
-- Implement Windows.Media.Playback.MediaPlayer WinRT API
+- Milkdrop visualizer
+- Persisting state of the player
+
+### Lower priority
+
 - Support for multiple displays
+- Automatic updates (prepared, notifications already done)
 - Support file associations
-- Add features that are not in the web version (via the API)
-- Try to integrate [winampify-js](https://github.com/remigallego/winampify-js), milkdrop can be integrated using microphone (?) due to problems with the DRM
+
+### Nice to have / Experiments
+
+- Features that can't be in the web version (by extending the API)
+- Try to integrate Spotify (inspiration from [winampify-js](https://github.com/remigallego/winampify-js)?), milkdrop can be integrated using microphone (?) due to problems with the DRM
 
 ## Known issues
 
@@ -63,6 +73,12 @@ yarn start
 ```
 
 After the build has completed, you should see one window with the app and one with developer tools. To try some changes, you can: change the code in the `./src` dir, close the current window and run the `yarn start` again.
+
+## Kudos
+
+This project is possible thanks to the [Webamp](https://github.com/captbaritone/webamp) from [@captbaritone](https://github.com/captbaritone) and wonderful open source work of others like [@jberg](https://github.com/jberg) and authors of [many dependencies](https://github.com/durasj/webamp-desktop/blob/master/package.json).
+
+Thumbar icons on Windows by [Smashicons](https://smashicons.com).
 
 ## Disclaimer
 Not affiliated with the [Winamp](http://www.winamp.com/). All product names, logos, and brands are property of their respective owners.

@@ -1,14 +1,5 @@
 const { remote } = require('electron')
-
-function debounce(fn) {
-  let timeout
-
-  return () => {
-    const ctx = this, args = arguments
-    clearTimeout(timeout)
-    timeout = setTimeout(() => fn.apply(ctx, args), 100)
-  };
-};
+const { debounce } = require('./utilities')
 
 function handleThumbnail() {
   // Currently only supported on Windows
@@ -21,8 +12,6 @@ function handleThumbnail() {
   const mainWebampWindow = document.querySelector('#main-window')
 
   const setClip = () => {
-    console.log('Setting')
-
     const boundingRect = mainWebampWindow.getBoundingClientRect()
 
     mainWindow.setThumbnailClip({

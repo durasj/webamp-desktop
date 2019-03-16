@@ -2,6 +2,8 @@
 // import Webamp from 'webamp'
 import Webamp from './webamp/webamp.bundle.js'
 
+const DEFAULT_DOCUMENT_TITLE = document.title
+
 const webamp = new Webamp({
   // Currently not working in the packaged apps
   // see https://github.com/durasj/webamp-desktop/issues/2
@@ -40,7 +42,45 @@ const unsubscribeOnClose = webamp.onClose(() => {
   unsubscribeOnClose()
 })
 
+webamp.onTrackDidChange(track => {
+  window.webampOnTrackDidChange(track)
+
+  if (track && 'metaData' in track && track.metaData.title && track.metaData.artist) {
+    document.title = `${track.metaData.title} - ${track.metaData.artist}`
+  } else if (track && 'defaultName' in track) {
+    document.title = track.defaultName
+  } else {
+    document.title = DEFAULT_DOCUMENT_TITLE
+  }
+})
+
 // Render after the skin has loaded.
-webamp.renderWhenReady(document.getElementById('webamp')).then(
-  () => window.rendered()
+webamp.renderWhenReady(document.getElementById('app')).then(
+  () => window.webampRendered()
 )
+
+// Expose some webamp API on the window for the main process
+window.webampPlay = function () {
+  // @ts-ignore
+  webamp.play()
+}
+
+window.webampPlay = function () {
+  // @ts-ignore
+  webamp.play()
+}
+
+window.webampPause = function () {
+  // @ts-ignore
+  webamp.pause()
+}
+
+window.webampNext = function () {
+  // @ts-ignore
+  webamp.nextTrack()
+}
+
+window.webampPrevious = function () {
+  // @ts-ignore
+  webamp.previousTrack()
+}
