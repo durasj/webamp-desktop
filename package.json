@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "copy": "cp -r ./bundled/* ./dist",
-    "build": "yarn run copy && parcel build --public-url ./ ./src/index.html",
+    "build": "yarn run copy && yarn build:src",
+    "build:src": "parcel build --public-url ./ ./src/index.html",
     "watch": "parcel watch --public-url ./ --hmr-hostname 127.0.0.1 --hmr-port 54439 ./src/index.html",
     "test": "jest",
     "electron": "./node_modules/.bin/electron .",
