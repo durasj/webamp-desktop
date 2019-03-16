@@ -40,7 +40,7 @@ before_script:
     sleep 3 # give xvfb some time to start
   fi
 script:
-- yarn build && yarn test
+- yarn build
 - |
   if [ "$TRAVIS_OS_NAME" == "linux" ]; then
     docker run --rm \
@@ -51,7 +51,7 @@ script:
       electronuserland/builder:wine \
       /bin/bash -c "yarn --link-duplicates --pure-lockfile && yarn dist --linux --win"
   else
-    yarn dist
+    yarn test && yarn dist
   fi
 before_cache:
 - rm -rf $HOME/.cache/electron-builder/wine
