@@ -1,6 +1,4 @@
-// Temporary switch to custom webamp build
-// import Webamp from 'webamp'
-import Webamp from './webamp/webamp.bundle.js'
+import Webamp from 'webamp'
 
 const DEFAULT_DOCUMENT_TITLE = document.title
 
