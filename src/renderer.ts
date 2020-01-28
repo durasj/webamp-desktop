@@ -1,4 +1,6 @@
 import Webamp from 'webamp'
+// @ts-ignore TODO: Add typings for butterchurn
+import butterchurnPresets from 'butterchurn-presets'
 
 const DEFAULT_DOCUMENT_TITLE = document.title
 
@@ -26,6 +28,18 @@ const webamp = new Webamp({
     { url: './skins/ZaxonRemake1-0.wsz', name: 'Zaxon Remake v1.0' },
   ],
   enableHotkeys: true,
+  // @ts-ignore
+  __butterchurnOptions: {
+    // @ts-ignore TODO: Add typings for butterchurn
+    importButterchurn: () => import('butterchurn'),
+    getPresets: () => {
+      const presets = butterchurnPresets.getPresets()
+      return Object.keys(presets).map((name) => ({
+        name,
+        butterchurnPresetObject: presets[name]
+      }))
+    },
+  },
 })
 
 const unsubscribeOnMinimize = webamp.onMinimize(() => {
