@@ -6,8 +6,8 @@
   "scripts": {
     "copy": "cp -r ./bundled/* ./dist",
     "build": "yarn run copy && yarn build:src",
-    "build:src": "npx parcel build --public-url ./ ./src/index.html",
-    "watch": "npx parcel watch --public-url ./ --hmr-hostname 127.0.0.1 --hmr-port 54439 ./src/index.html",
+    "build:src": "npx parcel build --public-url ./ --no-source-maps ./src/index.html",
+    "watch": "npx parcel watch --public-url ./ --no-source-maps --hmr-hostname 127.0.0.1 --hmr-port 54439 ./src/index.html",
     "test": "jest",
     "electron": "./node_modules/.bin/electron .",
     "start": "yarn run build && electron .",
