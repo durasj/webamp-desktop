@@ -2,6 +2,7 @@ const { remote } = require('electron')
 const handleTransparency = require('./transparency.js')
 const handleThumbnail = require('./thumbnail.js')
 const handleThumbar = require('./thumbar.js')
+const registerMediaKeys = require('./mediaKeys.js')
 
 // We want to completely disable the eval() for security reasons
 // ESLint will warn about any use of eval(), even this one
@@ -41,6 +42,7 @@ window.webampRendered = function () {
         window.webampPrevious,
         window.webampNext,
     )
+    registerMediaKeys(window.webampPause, window.webampPrevious, window.webampNext)
 }
 
 window.webampOnTrackDidChange = function(track) {
