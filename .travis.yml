@@ -3,14 +3,18 @@ matrix:
   - os: osx
     osx_image: xcode9.2
     language: node_js
-    node_js: '10'
+    node_js: '12'
     env:
     - ELECTRON_CACHE=$HOME/.cache/electron
     - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
   - os: linux
     dist: xenial
     language: node_js
-    node_js: '10'
+    node_js: '12'
+    services:
+      # For Electron e2e UI testing
+      # See https://github.com/electron/spectron#on-travis-ci
+      - xvfb
     env:
     - ELECTRON_CACHE=$HOME/.cache/electron
     - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
@@ -31,14 +35,6 @@ before_install:
   fi
 before_script:
 - git lfs pull
-# For Electron e2e UI testing
-# See https://github.com/electron/spectron#on-travis-ci
-- |
-  if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    export DISPLAY=:99.0
-    sh -e /etc/init.d/xvfb start
-    sleep 3 # give xvfb some time to start
-  fi
 script:
 - yarn build
 - |
