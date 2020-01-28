@@ -15,7 +15,7 @@
     "pack:linux": "electron-builder -l --x64",
     "pack:mac": "electron-builder -m --x64",
     "pack": "yarn run pack:win && yarn run pack:linux && yarn run pack:mac",
-    "dist": "yarn run build && build --x64"
+    "dist": "yarn run build && electron-builder --x64"
   },
   "homepage": "https://github.com/durasj/webamp-desktop",
   "repository": "https://github.com/durasj/webamp-desktop",
