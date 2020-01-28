@@ -11,9 +11,9 @@
     "test": "jest",
     "electron": "./node_modules/.bin/electron .",
     "start": "yarn run build && electron .",
-    "pack:win": "build -w --x64",
-    "pack:linux": "build -l --x64",
-    "pack:mac": "build -m --x64",
+    "pack:win": "electron-builder -w --x64",
+    "pack:linux": "electron-builder -l --x64",
+    "pack:mac": "electron-builder -m --x64",
     "pack": "yarn run pack:win && yarn run pack:linux && yarn run pack:mac",
     "dist": "yarn run build && build --x64"
   },
