@@ -22,16 +22,14 @@ function handleTransparency() {
             }
         }
         const mouseleaveHandler = (e) => {
-            if (!e.toElement
-                || !e.toElement.offsetParent
-                || e.toElement.offsetParent.id === 'webamp'
-            ) {
+            // Completely leaving browser window (i.e. to taskbar) or just entering transparent space
+            if (!e.toElement || e.toElement.id === 'app') {
                 mainWindow.setIgnoreMouseEvents(true, { forward: true })
                 ignored = true
             }
             // We want to schedule events again for context menu.
             // Context menu can "stick out" of windows.
-            if (e.toElement.classList.contains('context-menu')) {
+            if (e.toElement && e.toElement.classList.contains('context-menu')) {
                 e.toElement.addEventListener('mouseenter', mouseenterHandler)
                 e.toElement.addEventListener('mouseleave', mouseleaveHandler)
                 e.toElement.addEventListener('click', () => {

@@ -26,8 +26,25 @@ function interceptStreamProtocol() {
     const filePath = path.normalize(`${__dirname}/../../${url}`)
     const contentType = mime.contentType(path.extname(request.url))
 
+    if (!fs.existsSync(filePath)) {
+      callback({
+        statusCode: 404,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Cache-Control': 'private, max-age=0',
+          'Content-Type': contentType,
+          'Content-Security-Policy': cspSrc.join(';'),
+          'Date': (new Date).toUTCString(),
+          'Server': 'Electron',
+          'X-Frame-Options': 'DENY',
+          'X-XSS-Protection': '1; mode=block',
+        }
+      })
+      return
+    }
+
     callback({
-      statusCode: fs.existsSync(filePath) ? 200 : 404,
+      statusCode: 200,
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Cache-Control': 'private, max-age=0',

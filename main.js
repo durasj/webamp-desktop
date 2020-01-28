@@ -10,7 +10,7 @@ const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 
 if (isDev) {
-  require('electron-debug')({ showDevTools: 'undocked' })
+  require('electron-debug')({ devToolsMode: 'undocked' })
 }
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -48,6 +48,7 @@ function createWindow() {
     fullscreenable: false,
     icon: path.join(__dirname, 'res/icon.png'),
     webPreferences: {
+      contextIsolation: false,
       nodeIntegration: false,
       preload: path.join(__dirname, 'src/node/preload.js'),
     }
@@ -97,7 +98,7 @@ app.on('web-contents-created', (event, contents) => {
   contents.on('new-window', (event, navigationUrl) => {
     const parsedUrl = url.parse(navigationUrl)
 
-    if (parsedUrl.protocol === 'file:' || parsedUrl.protocol === 'chrome-devtools:') {
+    if (parsedUrl.protocol === 'file:' || parsedUrl.protocol === 'chrome-devtools:' || parsedUrl.protocol === 'devtools:') {
       return
     }
 
