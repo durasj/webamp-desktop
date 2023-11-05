@@ -6,7 +6,7 @@
   <h3 align="center">Webamp on desktop</h3>
 
   <p align="center">
-    Just like the original, now on your Mac, Windows or a Linux!
+    Just like the original, now on your Mac, Windows or Linux! ⚠️ Experimental ⚠️
   </p>
 
   <p align="center">
@@ -20,7 +20,7 @@
 
 [![Screenshot of webamp desktop on Windows](./res/screen-win.gif)](https://desktop.webamp.org/) [![Screenshot of Webamp on Linux](./res/screen-linux.png)](https://desktop.webamp.org/) [![Screenshot of Webamp on Mac OS X](./res/screen-mac.png)](https://desktop.webamp.org/)
 
-Unofficial app. It has most of the functionality of the original Winamp, but it's still more of a proof of concept. Based on the [Webamp](https://github.com/captbaritone/webamp) - "A reimplementation of Winamp 2.9 in HTML5 and JavaScript." by the [@captbaritone](https://github.com/captbaritone). Linux support via AppImage and .deb package tested on the Ubuntu 18.04.
+Unofficial experimental app. It has most of the functionality of the original Winamp, but it's more of a proof of concept. Based on the [Webamp](https://github.com/captbaritone/webamp) - "A reimplementation of Winamp 2.9 in HTML5 and JavaScript." by the [@captbaritone](https://github.com/captbaritone). Linux support via AppImage and .deb package tested on the Ubuntu and Fedora.
 
 ## Downloads
 Head over to the [desktop.webamp.org](https://desktop.webamp.org/) for the latest download files for your platform.
@@ -49,7 +49,7 @@ Head over to the [desktop.webamp.org](https://desktop.webamp.org/) for the lates
 
 ### Installation files are not trusted
 
-Some operating systems, especially Windows or some browsers do not trust the installation files because they are not digitally signed and/or commonly used yet. Unfortunately, code signing certificates that would help us overcome this cost hundreds of euro per year. This project does not have any funding and therefore can't afford it. It's recommended to verify the checksum of the files if you are worried. Every commit (and therefore published checksum) is signed in this repository.
+Some operating systems, especially Windows or some browsers do not trust the installation files because they are not digitally signed and/or commonly used yet. Unfortunately, code signing certificates that would help us overcome this cost hundreds per year. This project does not have any funding and therefore can't afford it. It's recommended to verify the checksum of the files if you are worried. Every commit (and therefore published checksum) is signed in this repository.
 
 ### Poor performance on Linux
 
@@ -59,7 +59,7 @@ Caused by the disabled hardware acceleration on the Linux. The reason is [issues
 
 ### Prerequisites
 
-Make sure you have latest [node.js](https://nodejs.org/en/) and [yarn](https://yarnpkg.com/lang/en/).
+Make sure you have the latest [node.js](https://nodejs.org/en/) and [bun](https://bun.sh).
 
 ### Installing
 
@@ -68,17 +68,17 @@ Clone this repository, install dependencies and run the start script:
 ```
 git clone https://github.com/durasj/webamp-desktop.git
 cd webamp-desktop
-yarn install
-yarn start
+bun install
+bun start
 ```
 
-After the build has completed, you should see one window with the app and one with developer tools. To try some changes, you can: change the code in the `./src` dir, close the current window and run the `yarn start` again.
+After the build has been completed, you should see one window with the app and one with developer tools. To try some changes, you can: change the code in the `./src` dir, close the current window and run the `bun start` again.
 
 ## Kudos
 
-This project is possible thanks to the [Webamp](https://github.com/captbaritone/webamp) from [@captbaritone](https://github.com/captbaritone) and wonderful open source work of others like [@jberg](https://github.com/jberg) and authors of [many dependencies](https://github.com/durasj/webamp-desktop/blob/master/package.json).
+This project is possible thanks to the [Webamp](https://github.com/captbaritone/webamp) from [@captbaritone](https://github.com/captbaritone) and the wonderful open source work of others like [@jberg](https://github.com/jberg) and authors of [many dependencies](https://github.com/durasj/webamp-desktop/blob/master/package.json).
 
 Thumbar icons on Windows by [Smashicons](https://smashicons.com).
 
 ## Disclaimer
-Not affiliated with the [Winamp](http://www.winamp.com/). All product names, logos, and brands are property of their respective owners.
+Not affiliated with the [Winamp](http://www.winamp.com/). All product names, logos, and brands are the property of their respective owners.

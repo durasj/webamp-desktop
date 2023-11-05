@@ -1,6 +1,6 @@
-const path = require('path')
+import path from 'path'
 
-const { remote } = require('electron')
+import { remote } from 'electron'
 
 function handleThumbar(state = 'stopped', onPlay, onPause, onPrevious, onNext) {
   // Only supported on Windows
@@ -35,4 +35,4 @@ function handleThumbar(state = 'stopped', onPlay, onPause, onPrevious, onNext) {
   ])
 }
 
-module.exports = handleThumbar
+export default handleThumbar

@@ -1,5 +1,5 @@
-const { remote } = require('electron')
-const { debounce } = require('./utilities')
+import { remote } from 'electron'
+import { debounce } from './utilities'
 
 function handleThumbnail() {
   // Currently only supported on Windows
@@ -30,4 +30,4 @@ function handleThumbnail() {
   setClip()
 }
 
-module.exports = handleThumbnail
+export default handleThumbnail

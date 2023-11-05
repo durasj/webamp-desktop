@@ -1,8 +1,8 @@
-const { autoUpdater } = require('electron-updater')
-const log = require('electron-log')
-const electron = require('electron')
-const isDev = require('electron-is-dev')
-const htmlToText = require('html-to-text')
+import { autoUpdater } from 'electron-updater'
+import log from 'electron-log'
+import electron from 'electron'
+import isDev from 'electron-is-dev'
+import htmlToText from 'html-to-text'
 
 function checkForUpdatesAndNotify() {
   if (isDev) {
@@ -44,4 +44,4 @@ function checkForUpdatesAndNotify() {
   autoUpdater.checkForUpdates()
 }
 
-module.exports = checkForUpdatesAndNotify
+export default checkForUpdatesAndNotify

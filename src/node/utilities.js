@@ -1,4 +1,4 @@
-function debounce(fn, time = 100) {
+export function debounce(fn, time = 100) {
     let timeout
 
     return () => {
@@ -6,8 +6,4 @@ function debounce(fn, time = 100) {
         clearTimeout(timeout)
         timeout = setTimeout(() => fn.apply(ctx, args), time)
     }
-}
-
-module.exports = {
-    debounce
 }

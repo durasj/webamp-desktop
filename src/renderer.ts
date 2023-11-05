@@ -1,6 +1,9 @@
+import { appWindow } from '@tauri-apps/api/window';
+
 // Temporary switch to custom webamp build
 // import Webamp from 'webamp'
 import Webamp from './webamp/webamp.bundle.js'
+import handleTransparency from './node/transparency.js';
 
 const DEFAULT_DOCUMENT_TITLE = document.title
 
@@ -30,22 +33,18 @@ const webamp = new Webamp({
   enableHotkeys: true,
 })
 
-const unsubscribeOnMinimize = webamp.onMinimize(() => {
-  window.minimizeElectronWindow()
+webamp.onMinimize(() => {
+  appWindow.minimize();
 })
 
-const unsubscribeOnClose = webamp.onClose(() => {
-  window.closeElectronWindow()
-  unsubscribeOnMinimize()
-  unsubscribeOnClose()
+webamp.onClose(() => {
+  appWindow.close();
 })
 
 webamp.onTrackDidChange(track => {
-  window.webampOnTrackDidChange(track)
-
-  if (track && 'metaData' in track && track.metaData.title && track.metaData.artist) {
+  if (track && 'metaData' in track && track.metaData?.title && track.metaData?.artist) {
     document.title = `${track.metaData.title} - ${track.metaData.artist}`
-  } else if (track && 'defaultName' in track) {
+  } else if (track && 'defaultName' in track && track.defaultName) {
     document.title = track.defaultName
   } else {
     document.title = DEFAULT_DOCUMENT_TITLE
@@ -53,32 +52,9 @@ webamp.onTrackDidChange(track => {
 })
 
 // Render after the skin has loaded.
-webamp.renderWhenReady(document.getElementById('app')).then(
-  () => window.webampRendered()
-)
-
-// Expose some webamp API on the window for the main process
-window.webampPlay = function () {
-  // @ts-ignore
-  webamp.play()
-}
-
-window.webampPlay = function () {
-  // @ts-ignore
-  webamp.play()
-}
-
-window.webampPause = function () {
-  // @ts-ignore
-  webamp.pause()
-}
-
-window.webampNext = function () {
-  // @ts-ignore
-  webamp.nextTrack()
-}
-
-window.webampPrevious = function () {
-  // @ts-ignore
-  webamp.previousTrack()
-}
+webamp.renderWhenReady(document.getElementById('app')!).then(() => {
+  handleTransparency((shouldHandle) => {
+    // TODO: Events are not forwarded
+    // appWindow.setIgnoreCursorEvents(!shouldHandle);
+  });
+})

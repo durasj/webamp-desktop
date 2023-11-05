@@ -1,7 +1,7 @@
-const fs = require('fs')
-const path = require('path')
-const mime = require('mime-types')
-const isDev = require('electron-is-dev')
+import fs from 'fs'
+import path from 'path'
+import mime from 'mime-types'
+import isDev from 'electron-is-dev'
 
 function interceptStreamProtocol() {
   // Content security policy
@@ -43,4 +43,4 @@ function interceptStreamProtocol() {
   }
 }
 
-module.exports = interceptStreamProtocol
+export default interceptStreamProtocol
