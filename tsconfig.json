@@ -8,7 +8,6 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": true,
     "lib": [ "es2015", "dom" ],
     "outDir": "./dist"
   },

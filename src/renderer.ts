@@ -41,7 +41,7 @@ const unsubscribeOnClose = webamp.onClose(() => {
 })
 
 webamp.onTrackDidChange(track => {
-  window.webampOnTrackDidChange(track)
+  // window.webampOnTrackDidChange(track)
 
   if (track && 'metaData' in track && track.metaData.title && track.metaData.artist) {
     document.title = `${track.metaData.title} - ${track.metaData.artist}`
@@ -54,7 +54,7 @@ webamp.onTrackDidChange(track => {
 
 // Render after the skin has loaded.
 webamp.renderWhenReady(document.getElementById('app')).then(
-  () => window.webampRendered()
+  () => window.setupRendered()
 )
 
 // Expose some webamp API on the window for the main process
